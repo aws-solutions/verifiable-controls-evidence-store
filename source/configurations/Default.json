@@ -1,0 +1,28 @@
+{
+  "AGSEvidenceStore": {
+    "retainData": false,
+    "publishOperationalMetrics": true,
+    "openSearchMasterNodeInstanceType": "t3.small.search",
+    "openSearchDataNodeInstanceType": "t3.small.search"
+  },
+  "AGSSecurityHubEvidenceCollector": {
+    "retainData": false,
+    "logLevel": "info"
+  },
+  "AGSSharedInfra": {
+    "vpcCidr": "10.0.0.0/16",
+    "maxAZs": 2,
+    "deploymentOptions": {
+      "apiGatewayType": "public",
+      "bastionInstance": false,
+      "developmentUserRole": false,
+      "enableFederatedAuth": false,
+      "enableWebClient": true
+    },
+    "identityProvider": {
+      "type": "COGNITO",
+      "domainPrefix": "agsweb"
+    },
+    "elasticSearchServiceLinkedRoleAvailable": false
+  }
+}

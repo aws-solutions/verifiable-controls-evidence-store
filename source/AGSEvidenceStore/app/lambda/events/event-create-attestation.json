@@ -1,0 +1,8 @@
+{
+    "httpMethod": "POST",
+    "resource": "/attestations",
+    "body": "{ \"authorityId\": \"7916a952-f8ca-460b-a493-b78d4819ed35\", \"targetId\": \"a-target\", \"content\":{\"codeScan\":\"success\"}  }",
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}

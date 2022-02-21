@@ -1,0 +1,5 @@
+{
+    "httpMethod": "GET",
+    "resource": "/authorities/{id}",
+    "pathParameters": { "id": "7916a952-f8ca-460b-a493-b78d4819ed35" }
+}

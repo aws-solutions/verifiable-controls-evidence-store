@@ -1,0 +1,41 @@
+{
+    "name": "@ags/webclient-app",
+    "version": "1.2.0",
+    "description": "AWS Governance Suite Web Client App",
+    "private": true,
+    "author": "Amazon Web Services",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@ags/webclient-governed-entity": "1.2.0",
+        "@ags/webclient-risk-compliance-dashboard-view": "1.2.0",
+        "@ags/webclient-application-release": "1.2.0",
+        "@ags/webclient-governance-hub-view": "1.2.0",
+        "@ags/webclient-business-units": "1.2.0",
+        "@ags/webclient-estates": "1.2.0",
+        "@ags/webclient-evidence": "1.2.0",
+        "@ags/webclient-risks": "1.2.0",
+        "@ags/webclient-core": "1.2.0"
+    },
+    "devDependencies": {
+        "@craco/craco": "^6.3.0",
+        "react-scripts": "4.0.3"
+    },
+    "scripts": {
+        "build": "bash ../scripts/build.sh app",
+        "start": "bash ../scripts/start.sh app",
+        "test": "jest --silent --watch",
+        "test:cover": "jest --silent --passWithNoTests --colors --coverage"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}

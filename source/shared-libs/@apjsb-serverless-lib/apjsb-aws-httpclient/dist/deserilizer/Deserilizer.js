@@ -1,0 +1,31 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.parseBody = void 0;
+/*
+  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+  
+  Licensed under the Apache License, Version 2.0 (the "License").
+  You may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+      http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+const node_http_handler_1 = require("@aws-sdk/node-http-handler");
+const util_utf8_node_1 = require("@aws-sdk/util-utf8-node");
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// Collect low-level response body stream to Uint8Array.
+const collectBody = (streamBody = new Uint8Array()) => {
+    if (streamBody instanceof Uint8Array) {
+        return Promise.resolve(streamBody);
+    }
+    return node_http_handler_1.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
+};
+// Encode Uint8Array data into string with utf-8.
+exports.parseBody = (streamBody) => collectBody(streamBody).then((body) => util_utf8_node_1.toUtf8(body));
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRGVzZXJpbGl6ZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9saWIvZGVzZXJpbGl6ZXIvRGVzZXJpbGl6ZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUE7Ozs7Ozs7Ozs7Ozs7O0VBY0U7QUFDRixrRUFBNkQ7QUFDN0QsNERBQWlEO0FBQ2pELHNEQUFzRDtBQUN0RCx3REFBd0Q7QUFDeEQsTUFBTSxXQUFXLEdBQUcsQ0FBQyxhQUFzQixJQUFJLFVBQVUsRUFBRSxFQUF1QixFQUFFO0lBQ2hGLElBQUksVUFBVSxZQUFZLFVBQVUsRUFBRTtRQUNsQyxPQUFPLE9BQU8sQ0FBQyxPQUFPLENBQUMsVUFBVSxDQUFDLENBQUM7S0FDdEM7SUFDRCxPQUFPLG1DQUFlLENBQUMsVUFBVSxDQUFDLElBQUksT0FBTyxDQUFDLE9BQU8sQ0FBQyxJQUFJLFVBQVUsRUFBRSxDQUFDLENBQUM7QUFDNUUsQ0FBQyxDQUFDO0FBRUYsaURBQWlEO0FBQ3BDLFFBQUEsU0FBUyxHQUFHLENBQUMsVUFBbUIsRUFBbUIsRUFBRSxDQUM5RCxXQUFXLENBQUMsVUFBVSxDQUFDLENBQUMsSUFBSSxDQUFDLENBQUMsSUFBSSxFQUFFLEVBQUUsQ0FBQyx1QkFBTSxDQUFDLElBQUksQ0FBQyxDQUFDLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKiBcbiAgQ29weXJpZ2h0IEFtYXpvbi5jb20sIEluYy4gb3IgaXRzIGFmZmlsaWF0ZXMuIEFsbCBSaWdodHMgUmVzZXJ2ZWQuXG4gIFxuICBMaWNlbnNlZCB1bmRlciB0aGUgQXBhY2hlIExpY2Vuc2UsIFZlcnNpb24gMi4wICh0aGUgXCJMaWNlbnNlXCIpLlxuICBZb3UgbWF5IG5vdCB1c2UgdGhpcyBmaWxlIGV4Y2VwdCBpbiBjb21wbGlhbmNlIHdpdGggdGhlIExpY2Vuc2UuXG4gIFlvdSBtYXkgb2J0YWluIGEgY29weSBvZiB0aGUgTGljZW5zZSBhdFxuICBcbiAgICAgIGh0dHA6Ly93d3cuYXBhY2hlLm9yZy9saWNlbnNlcy9MSUNFTlNFLTIuMFxuICBcbiAgVW5sZXNzIHJlcXVpcmVkIGJ5IGFwcGxpY2FibGUgbGF3IG9yIGFncmVlZCB0byBpbiB3cml0aW5nLCBzb2Z0d2FyZVxuICBkaXN0cmlidXRlZCB1bmRlciB0aGUgTGljZW5zZSBpcyBkaXN0cmlidXRlZCBvbiBhbiBcIkFTIElTXCIgQkFTSVMsXG4gIFdJVEhPVVQgV0FSUkFOVElFUyBPUiBDT05ESVRJT05TIE9GIEFOWSBLSU5ELCBlaXRoZXIgZXhwcmVzcyBvciBpbXBsaWVkLlxuICBTZWUgdGhlIExpY2Vuc2UgZm9yIHRoZSBzcGVjaWZpYyBsYW5ndWFnZSBnb3Zlcm5pbmcgcGVybWlzc2lvbnMgYW5kXG4gIGxpbWl0YXRpb25zIHVuZGVyIHRoZSBMaWNlbnNlLlxuKi9cbmltcG9ydCB7IHN0cmVhbUNvbGxlY3RvciB9IGZyb20gJ0Bhd3Mtc2RrL25vZGUtaHR0cC1oYW5kbGVyJztcbmltcG9ydCB7IHRvVXRmOCB9IGZyb20gJ0Bhd3Mtc2RrL3V0aWwtdXRmOC1ub2RlJztcbi8qIGVzbGludC1kaXNhYmxlIEB0eXBlc2NyaXB0LWVzbGludC9uby11bnVzZWQtdmFycyAqL1xuLy8gQ29sbGVjdCBsb3ctbGV2ZWwgcmVzcG9uc2UgYm9keSBzdHJlYW0gdG8gVWludDhBcnJheS5cbmNvbnN0IGNvbGxlY3RCb2R5ID0gKHN0cmVhbUJvZHk6IHVua25vd24gPSBuZXcgVWludDhBcnJheSgpKTogUHJvbWlzZTxVaW50OEFycmF5PiA9PiB7XG4gICAgaWYgKHN0cmVhbUJvZHkgaW5zdGFuY2VvZiBVaW50OEFycmF5KSB7XG4gICAgICAgIHJldHVybiBQcm9taXNlLnJlc29sdmUoc3RyZWFtQm9keSk7XG4gICAgfVxuICAgIHJldHVybiBzdHJlYW1Db2xsZWN0b3Ioc3RyZWFtQm9keSkgfHwgUHJvbWlzZS5yZXNvbHZlKG5ldyBVaW50OEFycmF5KCkpO1xufTtcblxuLy8gRW5jb2RlIFVpbnQ4QXJyYXkgZGF0YSBpbnRvIHN0cmluZyB3aXRoIHV0Zi04LlxuZXhwb3J0IGNvbnN0IHBhcnNlQm9keSA9IChzdHJlYW1Cb2R5OiB1bmtub3duKTogUHJvbWlzZTxzdHJpbmc+ID0+XG4gICAgY29sbGVjdEJvZHkoc3RyZWFtQm9keSkudGhlbigoYm9keSkgPT4gdG9VdGY4KGJvZHkpKTtcbiJdfQ==

@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "lib": ["es2019"],
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "strict": true,
+        "target": "es2019",
+        "types": ["node", "jest"],
+        "outDir": "./dist",
+        "baseUrl": "./",
+        "paths": {
+            "src/*": ["src/*"],
+            "test/*": ["test/*"]
+        }
+    },
+    "include": ["evidences-stream-processor/**/*", "src/**/*", "test/**/*"],
+    "exclude": ["node_modules"]
+}

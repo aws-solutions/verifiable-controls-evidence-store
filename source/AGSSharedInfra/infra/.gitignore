@@ -1,0 +1,16 @@
+*.d.ts
+node_modules
+dist
+
+coverage/
+reports/
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+cdk.out.*
+cdk.context.json
+
+# Parcel default cache directory
+.parcel-cache
+

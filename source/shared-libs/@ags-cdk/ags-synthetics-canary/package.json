@@ -1,0 +1,77 @@
+{
+  "_args": [
+    [
+      "@ags-cdk/ags-synthetics-canary@3.0.0-alpha.0",
+      "/Users/vovan/projects/amazon/ags-evidencestore/infra"
+    ]
+  ],
+  "_from": "@ags-cdk/ags-synthetics-canary@3.0.0-alpha.0",
+  "_id": "@ags-cdk/ags-synthetics-canary@3.0.0-alpha.0",
+  "_inBundle": false,
+  "_integrity": "sha512-GgJCMorr7WsSQhIDdaRI6YXL3aw+uX0+DwxPPR3W97i6kDTY7KasSDAV6fKwPeW8kK0QL9wrCvcMm7MXacO75w==",
+  "_location": "/@ags-cdk/ags-synthetics-canary",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "@ags-cdk/ags-synthetics-canary@3.0.0-alpha.0",
+    "name": "@ags-cdk/ags-synthetics-canary",
+    "escapedName": "@ags-cdk%2fags-synthetics-canary",
+    "scope": "@ags-cdk",
+    "rawSpec": "3.0.0-alpha.0",
+    "saveSpec": null,
+    "fetchSpec": "3.0.0-alpha.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://apj-solution-builders-044817409007.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/AGS-CDK-Constructs/@ags-cdk/ags-synthetics-canary/-/ags-synthetics-canary-3.0.0-alpha.0.tgz",
+  "_spec": "3.0.0-alpha.0",
+  "_where": "/Users/vovan/projects/amazon/ags-evidencestore/infra",
+  "author": {
+    "name": "Amazon Web Services"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-synthetics-alpha": "^2.20.0-alpha.0",
+    "aws-cdk-lib": "^2.20.0",
+    "cdk-assume-role-credential-plugin": "^1.4.0",
+    "constructs": "^10.0.114",
+    "source-map-support": "^0.5.16"
+  },
+  "description": "AWS Governance Suite Service Cloudwatch Synthetics Canary Construct",
+  "devDependencies": {
+    "@types/jest": "^26.0.10",
+    "@types/node": "10.17.27",
+    "@typescript-eslint/eslint-plugin": "^4.11.1",
+    "@typescript-eslint/parser": "^4.11.1",
+    "aws-cdk": "^2.20.0",
+    "eslint": "^7.16.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-config-typescript": "^3.0.0",
+    "eslint-plugin-header": "^3.1.0",
+    "eslint-plugin-prettier": "^3.3.0",
+    "jest": "^27.2.5",
+    "prettier": "^2.2.1",
+    "ts-jest": "^27.0.5",
+    "ts-node": "^9.0.0",
+    "typescript": "~3.9.7"
+  },
+  "files": [
+    "dist/**/*",
+    "lib/**.*"
+  ],
+  "gitHead": "ba68e64698ec9632d181cae7df040f3d24c5c345",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "name": "@ags-cdk/ags-synthetics-canary",
+  "publishConfig": {
+    "registry": "https://apj-solution-builders-044817409007.d.codeartifact.ap-southeast-2.amazonaws.com/npm/AGS-CDK-Constructs/"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.production.json",
+    "lint": "eslint --fix --ext .ts .",
+    "test": "jest --silent"
+  },
+  "types": "dist/index.d.ts",
+  "version": "3.0.0-alpha.0"
+}

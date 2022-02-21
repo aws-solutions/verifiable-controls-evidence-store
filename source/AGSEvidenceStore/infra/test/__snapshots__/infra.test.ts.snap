@@ -1,0 +1,493 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot Test 1`] = `
+Object {
+  "Outputs": Object {
+    "HelloWorldFunctionGatewayEndpoint0EE5627A": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "HelloWorldFunctionGateway168AD247",
+            },
+            ".execute-api.",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            Object {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            Object {
+              "Ref": "HelloWorldFunctionGatewayDeploymentStageprodC9F808E6",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+    "Url": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "HelloWorldFunctionGateway168AD247",
+            },
+            ".execute-api.",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            Object {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            Object {
+              "Ref": "HelloWorldFunctionGatewayDeploymentStageprodC9F808E6",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "AssetParameters89267c8fc1ac648c27f41d17d6114f9192bf32419339101d99e987cd3a7f1a93ArtifactHash09428912": Object {
+      "Description": "Artifact hash for asset \\"89267c8fc1ac648c27f41d17d6114f9192bf32419339101d99e987cd3a7f1a93\\"",
+      "Type": "String",
+    },
+    "AssetParameters89267c8fc1ac648c27f41d17d6114f9192bf32419339101d99e987cd3a7f1a93S3BucketE867DF76": Object {
+      "Description": "S3 bucket for asset \\"89267c8fc1ac648c27f41d17d6114f9192bf32419339101d99e987cd3a7f1a93\\"",
+      "Type": "String",
+    },
+    "AssetParameters89267c8fc1ac648c27f41d17d6114f9192bf32419339101d99e987cd3a7f1a93S3VersionKey995EA65A": Object {
+      "Description": "S3 key for asset version \\"89267c8fc1ac648c27f41d17d6114f9192bf32419339101d99e987cd3a7f1a93\\"",
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "HelloWorldFunctionB2AB6E79": Object {
+      "DependsOn": Array [
+        "HelloWorldFunctionServiceRole8E0BD458",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters89267c8fc1ac648c27f41d17d6114f9192bf32419339101d99e987cd3a7f1a93S3BucketE867DF76",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters89267c8fc1ac648c27f41d17d6114f9192bf32419339101d99e987cd3a7f1a93S3VersionKey995EA65A",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters89267c8fc1ac648c27f41d17d6114f9192bf32419339101d99e987cd3a7f1a93S3VersionKey995EA65A",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Handler": "app.lambdaHandler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "HelloWorldFunctionServiceRole8E0BD458",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "HelloWorldFunctionGateway168AD247": Object {
+      "Properties": Object {
+        "Description": "Endpoint for a simple Lambda-powered web service",
+        "Name": "HelloWorldFunctionGateway",
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "HelloWorldFunctionGatewayANY53A0CEF7": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "ANY",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "HelloWorldFunctionB2AB6E79",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Fn::GetAtt": Array [
+            "HelloWorldFunctionGateway168AD247",
+            "RootResourceId",
+          ],
+        },
+        "RestApiId": Object {
+          "Ref": "HelloWorldFunctionGateway168AD247",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "HelloWorldFunctionGatewayANYApiPermissionMyTestStackHelloWorldFunctionGateway9B361BA5ANY59586213": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "HelloWorldFunctionB2AB6E79",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "HelloWorldFunctionGateway168AD247",
+              },
+              "/",
+              Object {
+                "Ref": "HelloWorldFunctionGatewayDeploymentStageprodC9F808E6",
+              },
+              "/*/",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "HelloWorldFunctionGatewayANYApiPermissionTestMyTestStackHelloWorldFunctionGateway9B361BA5ANY2EA23891": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "HelloWorldFunctionB2AB6E79",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "HelloWorldFunctionGateway168AD247",
+              },
+              "/test-invoke-stage/*/",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "HelloWorldFunctionGatewayAccount521ADEEE": Object {
+      "DependsOn": Array [
+        "HelloWorldFunctionGateway168AD247",
+      ],
+      "Properties": Object {
+        "CloudWatchRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "HelloWorldFunctionGatewayCloudWatchRoleDD7D8D42",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGateway::Account",
+    },
+    "HelloWorldFunctionGatewayCloudWatchRoleDD7D8D42": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "HelloWorldFunctionGatewayDeployment716722A23b1b674d3d3846d521eb5e24857a5569": Object {
+      "DependsOn": Array [
+        "HelloWorldFunctionGatewayproxyANYAF583F01",
+        "HelloWorldFunctionGatewayproxy3ED2B2B9",
+        "HelloWorldFunctionGatewayANY53A0CEF7",
+      ],
+      "Properties": Object {
+        "Description": "Automatically created by the RestApi construct",
+        "RestApiId": Object {
+          "Ref": "HelloWorldFunctionGateway168AD247",
+        },
+      },
+      "Type": "AWS::ApiGateway::Deployment",
+    },
+    "HelloWorldFunctionGatewayDeploymentStageprodC9F808E6": Object {
+      "Properties": Object {
+        "DeploymentId": Object {
+          "Ref": "HelloWorldFunctionGatewayDeployment716722A23b1b674d3d3846d521eb5e24857a5569",
+        },
+        "RestApiId": Object {
+          "Ref": "HelloWorldFunctionGateway168AD247",
+        },
+        "StageName": "prod",
+      },
+      "Type": "AWS::ApiGateway::Stage",
+    },
+    "HelloWorldFunctionGatewayproxy3ED2B2B9": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "HelloWorldFunctionGateway168AD247",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "{proxy+}",
+        "RestApiId": Object {
+          "Ref": "HelloWorldFunctionGateway168AD247",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "HelloWorldFunctionGatewayproxyANYAF583F01": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "ANY",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "HelloWorldFunctionB2AB6E79",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "HelloWorldFunctionGatewayproxy3ED2B2B9",
+        },
+        "RestApiId": Object {
+          "Ref": "HelloWorldFunctionGateway168AD247",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "HelloWorldFunctionGatewayproxyANYApiPermissionMyTestStackHelloWorldFunctionGateway9B361BA5ANYproxy347F867C": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "HelloWorldFunctionB2AB6E79",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "HelloWorldFunctionGateway168AD247",
+              },
+              "/",
+              Object {
+                "Ref": "HelloWorldFunctionGatewayDeploymentStageprodC9F808E6",
+              },
+              "/*/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "HelloWorldFunctionGatewayproxyANYApiPermissionTestMyTestStackHelloWorldFunctionGateway9B361BA5ANYproxy5272201C": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "HelloWorldFunctionB2AB6E79",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "HelloWorldFunctionGateway168AD247",
+              },
+              "/test-invoke-stage/*/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "HelloWorldFunctionServiceRole8E0BD458": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+  },
+}
+`;

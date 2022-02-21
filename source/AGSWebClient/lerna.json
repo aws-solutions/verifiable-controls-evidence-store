@@ -1,0 +1,6 @@
+{
+    "packages": ["app", "apps/**", "lighthouse", "extractor", "packages/**", "pipeline"],
+    "version": "fixed",
+    "npmClient": "yarn",
+    "useWorkspaces": true
+}

@@ -1,0 +1,11 @@
+node_modules/
+**/node_modules/
+build 
+**/build/ 
+cdk.out/ 
+coverage/
+dist/
+**/dist/
+node_modules/ 
+temp/
+reports/

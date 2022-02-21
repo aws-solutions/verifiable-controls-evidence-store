@@ -1,0 +1,78 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    demo
+
+    Sample SAM Template for demo
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+    Function:
+        Timeout: 3
+Resources:
+    evidence-store:
+        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+        Properties:
+            CodeUri: src/
+            Handler: App.lambdaHandler
+            Runtime: nodejs12.x
+            Environment:
+                Variables:
+                    ATTESTATION_LEDGER_NAME: 'Attestations'
+                    ATTESTATION_CONTENT_BUCKET_NAME: 'attestation-service-stac-attestationcontentbucket-qi9qi9wj75ev'
+                    ATTESTATION_AUTHORITY_TABLE_NAME: 'attestation-authorities'
+            Events:
+                CreateAttestation:
+                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+                    Properties:
+                        Path: /attestations
+                        Method: post
+                CreateAttestationAuthorities:
+                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+                    Properties:
+                        Path: /authorities
+                        Method: post
+                GetAttestationAuthorityById:
+                    Type: Api
+                    Properties:
+                        Path: /authorities/{id}
+                        Method: get
+                UpdateAttestationAuthorityById:
+                    Type: Api
+                    Properties:
+                        Path: /authorities/{id}
+                        Method: put
+                GetAttestation:
+                    Type: Api
+                    Properties:
+                        Path: /attestations/{id}
+                        Method: get
+                GetAttestations:
+                    Type: Api
+                    Properties:
+                        Path: /attestations/
+                        Method: get
+                CreateSchema:
+                    Type: Api
+                    Properties:
+                        Path: /authorities/{id}/schemas
+                        Method: post
+                GetSchemaById:
+                    Type: Api
+                    Properties:
+                        Path: /authorities/{id}/schemas/{schemaId}
+                        Method: get
+
+Outputs:
+    # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+    # Find out more about other implicit resources you can reference within SAM
+    # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+    AttestationServiceApi:
+        Description: 'API Gateway endpoint URL for Prod stage for Attestation Service function'
+        Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/'
+    AttestationServiceFunction:
+        Description: 'Attestation Service Lambda Function ARN'
+        Value: !GetAtt AttestationServiceFunction.Arn
+    AttestationServiceFunctionIamRole:
+        Description: 'Implicit IAM Role created for Attestation Service function'
+        Value: !GetAtt AttestationServiceFunctionRole.Arn

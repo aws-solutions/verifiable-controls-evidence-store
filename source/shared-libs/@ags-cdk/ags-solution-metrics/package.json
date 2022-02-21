@@ -1,0 +1,89 @@
+{
+  "_args": [
+    [
+      "@ags-cdk/ags-solution-metrics@2.0.0-alpha.0",
+      "/Users/vovan/projects/amazon/ags-evidencestore/infra"
+    ]
+  ],
+  "_from": "@ags-cdk/ags-solution-metrics@2.0.0-alpha.0",
+  "_id": "@ags-cdk/ags-solution-metrics@2.0.0-alpha.0",
+  "_inBundle": false,
+  "_integrity": "sha512-04DADnfZCMHXYHLZJU3T14BLDBwh0HJrA4TAUBrARR2NBxOjB6rEwc1+NEYusflc0hdBHsfL1daj0h+VPO+xeQ==",
+  "_location": "/@ags-cdk/ags-solution-metrics",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "@ags-cdk/ags-solution-metrics@2.0.0-alpha.0",
+    "name": "@ags-cdk/ags-solution-metrics",
+    "escapedName": "@ags-cdk%2fags-solution-metrics",
+    "scope": "@ags-cdk",
+    "rawSpec": "2.0.0-alpha.0",
+    "saveSpec": null,
+    "fetchSpec": "2.0.0-alpha.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://apj-solution-builders-044817409007.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/AGS-CDK-Constructs/@ags-cdk/ags-solution-metrics/-/ags-solution-metrics-2.0.0-alpha.0.tgz",
+  "_spec": "2.0.0-alpha.0",
+  "_where": "/Users/vovan/projects/amazon/ags-evidencestore/infra",
+  "author": {
+    "name": "Amazon Web Services"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.20.0",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.799.0",
+    "axios": "^0.25.0",
+    "constructs": "^10.0.114",
+    "moment": "^2.29.1",
+    "reflect-metadata": "^0.1.13",
+    "source-map-support": "^0.5.16",
+    "uuid": "^8.3.2"
+  },
+  "description": "AWS Solution Metrics Construct",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.92",
+    "@types/jest": "^27.4.0",
+    "@types/node": "10.17.27",
+    "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^4.11.1",
+    "@typescript-eslint/parser": "^4.11.1",
+    "aws-cdk": "^2.20.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "eslint": "^7.16.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-config-typescript": "^3.0.0",
+    "eslint-plugin-header": "^3.1.0",
+    "eslint-plugin-prettier": "^3.3.0",
+    "jest": "^27.2.5",
+    "jest-junit": "^13.0.0",
+    "prettier": "^2.2.1",
+    "ts-jest": "^27.0.5",
+    "ts-loader": "^8.0.14",
+    "ts-node": "^9.0.0",
+    "typescript": "~3.9.7",
+    "webpack": "^5.13.0",
+    "webpack-cli": "^4.3.1",
+    "webpack-node-externals": "^2.5.2"
+  },
+  "files": [
+    "dist/**/*",
+    "lib/**.*"
+  ],
+  "gitHead": "ba68e64698ec9632d181cae7df040f3d24c5c345",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "name": "@ags-cdk/ags-solution-metrics",
+  "publishConfig": {
+    "registry": "https://apj-solution-builders-044817409007.d.codeartifact.ap-southeast-2.amazonaws.com/npm/AGS-CDK-Constructs/"
+  },
+  "scripts": {
+    "build": "webpack && tsc --project tsconfig.production.json",
+    "lint": "eslint --fix --ext .ts .",
+    "test": "jest --silent"
+  },
+  "types": "dist/index.d.ts",
+  "version": "2.0.0-alpha.0"
+}

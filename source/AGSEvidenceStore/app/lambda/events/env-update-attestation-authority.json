@@ -1,0 +1,6 @@
+{
+    "httpMethod": "PUT",
+    "resource": "/authorities/{id}",
+    "body": "{ \"authorityId\": \"7916a952-f8ca-460b-a493-b78d4819ed35\", \"enabled\": false }",
+    "pathParameters": { "id": "7916a952-f8ca-460b-a493-b78d4819ed35" }
+}
