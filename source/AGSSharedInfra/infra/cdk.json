@@ -1,0 +1,12 @@
+{
+    "app": "npx ts-node bin/ags-shared-infra.ts",
+    "context": {
+        "aws-cdk:enableDiffNoFail": "true",
+        "@aws-cdk/core:stackRelativeExports": "true",
+        "@aws-cdk/core:newStyleStackSynthesis": "true",
+        "serviceName": "AGSSharedInfra",
+        "sharedInfraVersion": 1,
+        "configurationPath": "../../../configurations",
+        "solutionInfoFilePath": "../../../solution-info.json"
+    }
+}

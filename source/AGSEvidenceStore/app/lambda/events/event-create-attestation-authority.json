@@ -1,0 +1,8 @@
+{
+    "httpMethod": "POST",
+    "resource": "/authorities",
+    "body": "{        \"name\": \"test authority\",        \"description\": \"something to play with\"    }",
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}

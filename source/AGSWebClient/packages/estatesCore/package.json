@@ -1,0 +1,18 @@
+{
+    "name": "@ags/webclient-estates-core",
+    "version": "1.2.0",
+    "description": "AWS Governance Suite Web Client Estates Core Library",
+    "private": true,
+    "author": "Amazon Web Services",
+    "license": "Apache-2.0",
+    "entry": "index.ts",
+    "scripts": {
+        "build": "tsc",
+        "test": "jest --silent --watch",
+        "test:cover": "jest --silent --passWithNoTests --colors --coverage"
+    },
+    "dependencies": {
+        "@ags/webclient-core": "1.2.0",
+        "@ags/webclient-business-units-core": "1.2.0"
+    }
+}

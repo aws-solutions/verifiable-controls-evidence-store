@@ -1,0 +1,492 @@
+{
+    "info": {
+        "_postman_id": "fb0e1ae9-1359-4edb-ae8a-68801ae407bc",
+        "name": "Evidence Store",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "evidences",
+            "item": [
+                {
+                    "name": "POST /evidences",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "x-api-key",
+                                "value": "{{providerApiKey}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/evidences",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": ["prod", "evidences"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST /evidences/search",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/evidences/search",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": ["prod", "evidences", "search"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET /evidences/{id}",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/evidences/{{evidenceId}}",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": ["prod", "evidences", "{{evidenceId}}"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET /evidences/{id}/attachments/{attachmentId}",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/evidences/{{evidenceId}}/SGlfqMucEOZMhtHSc9dmXOrBNDFZp1dwXMBW1hLMnB8",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": [
+                                "prod",
+                                "evidences",
+                                "{{evidenceId}}",
+                                "SGlfqMucEOZMhtHSc9dmXOrBNDFZp1dwXMBW1hLMnB8"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET /evidences/{id}/verificationstatus",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/evidences/{{evidenceId}}/verificationstatus",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": [
+                                "prod",
+                                "evidences",
+                                "{{evidenceId}}",
+                                "verificationstatus"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET /evidences/{id}/revisions",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/evidences/{{evidenceId}}/revisions",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": ["prod", "evidences", "{{evidenceId}}", "revisions"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET /evidences/{id}/revisions/{revisionId}",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/evidences/{{evidenceId}}/revisions/0",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": [
+                                "prod",
+                                "evidences",
+                                "{{evidenceId}}",
+                                "revisions",
+                                "0"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET /evidences/{id}/revisions/{revisionId}/verificationstatus",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/evidences/{{evidenceId}}/revisions/0/verificationstatus",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": [
+                                "prod",
+                                "evidences",
+                                "{{evidenceId}}",
+                                "revisions",
+                                "0",
+                                "verificationstatus"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET /evidences/{id}/revisions/{revisionId}/attachments/{attachmentId}",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/evidences/{{evidenceId}}/revisions/0/attachments/9alZ2-7q9fiQyYIBbBB-xpD6pVP-Kuhq2pwqWdQc6Qk",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": [
+                                "prod",
+                                "evidences",
+                                "{{evidenceId}}",
+                                "revisions",
+                                "0",
+                                "attachments",
+                                "9alZ2-7q9fiQyYIBbBB-xpD6pVP-Kuhq2pwqWdQc6Qk"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "providers",
+            "item": [
+                {
+                    "name": "POST /providers",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "_X_AMZN_TRACE_ID",
+                                "value": "12345",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/providers",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": ["prod", "providers"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET /providers",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "_X_AMZN_TRACE_ID",
+                                "value": "12345",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/providers",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": ["prod", "providers"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET /providers/{id}",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/providers/{{providerId}}",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": ["prod", "providers", "{{providerId}}"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "PUT /providers/{id}",
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"providerId\": \"fa434e30-ea5b-436a-babf-563fcd00bca4\",\n    \"enabled\": false\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/providers/{{providerId}}",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": ["prod", "providers", "{{providerId}}"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST /providers/{id}/schemas",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/providers/{{providerId}}/schemas",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": ["prod", "providers", "{{providerId}}", "schemas"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET /providers/{id}/schemas/{id}",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "https://{{evidenceStoreApiId}}.execute-api.ap-southeast-2.amazonaws.com/prod/providers/{{providerId}}/schemas/{id}",
+                            "protocol": "https",
+                            "host": [
+                                "{{evidenceStoreApiId}}",
+                                "execute-api",
+                                "ap-southeast-2",
+                                "amazonaws",
+                                "com"
+                            ],
+                            "path": [
+                                "prod",
+                                "providers",
+                                "{{providerId}}",
+                                "schemas",
+                                "{id}"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "awsv4",
+        "awsv4": [
+            {
+                "key": "sessionToken",
+                "value": "",
+                "type": "string"
+            },
+            {
+                "key": "region",
+                "value": "ap-southeast-2",
+                "type": "string"
+            },
+            {
+                "key": "secretKey",
+                "value": "{{secretKey}}",
+                "type": "string"
+            },
+            {
+                "key": "accessKey",
+                "value": "{{accessKey}}",
+                "type": "string"
+            }
+        ]
+    },
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [""]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [""]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "accessKey",
+            "value": ""
+        },
+        {
+            "key": "secretKey",
+            "value": ""
+        },
+        {
+            "key": "evidenceStoreApiId",
+            "value": ""
+        },
+        {
+            "key": "providerApiKey",
+            "value": ""
+        },
+        {
+            "key": "sessionToken",
+            "value": ""
+        },
+        {
+            "key": "evidenceId",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "providerId",
+            "value": "",
+            "type": "string"
+        }
+    ]
+}

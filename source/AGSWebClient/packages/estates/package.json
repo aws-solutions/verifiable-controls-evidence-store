@@ -1,0 +1,20 @@
+{
+    "name": "@ags/webclient-estates",
+    "version": "1.2.0",
+    "description": "AWS Governance Suite Web Client Estates App Module",
+    "private": true,
+    "author": "Amazon Web Services",
+    "license": "Apache-2.0",
+    "entry": "index.ts",
+    "scripts": {
+        "build": "tsc",
+        "test": "jest --silent --watch",
+        "test:cover": "jest --silent --passWithNoTests --colors --coverage"
+    },
+    "dependencies": {
+        "@ags/webclient-core": "1.2.0",
+        "@ags/webclient-business-units-core": "1.2.0",
+        "@ags/webclient-estates-core": "1.2.0",
+        "@ags/webclient-estates-view": "1.2.0"
+    }
+}

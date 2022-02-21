@@ -1,0 +1,66 @@
+{
+    "name": "@ags/webclient-root",
+    "private": true,
+    "description": "AWS Governance Suite Web Client",
+    "author": "Amazon Web Services",
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "@aws-sdk/client-ssm": "^3.48.0",
+        "@testing-library/jest-dom": "^5.15.1",
+        "@testing-library/react": "^12.1.2",
+        "@testing-library/user-event": "^13.5.0",
+        "@types/jest-when": "^2.7.3",
+        "aws4": "^1.11.0",
+        "axios": "^0.25.0",
+        "cypress": "^9.3.1",
+        "eslint-plugin-cypress": "^2.12.1",
+        "eslint-plugin-header": "^3.1.1",
+        "git-conventional-commits": "^1.1.0",
+        "husky": "^7.0.2",
+        "jest-when": "^3.4.2",
+        "lerna": "^4.0.0",
+        "lint-staged": "^11.1.2",
+        "nanoid": "^3.2.0",
+        "prettier": "^2.4.1",
+        "start-server-and-test": "^1.14.0",
+        "ts-jest": "26.5.6",
+        "typescript": "^4.1.2"
+    },
+    "scripts": {
+        "start": "yarn workspace @ags/webclient-app start",
+        "build": "yarn workspaces run build",
+        "build:app": "yarn workspace @ags/webclient-app build",
+        "test": "jest --silent -i --watch",
+        "test:cover": "jest --silent --colors --coverage -i",
+        "lint:fix": "eslint --max-warnings 0 --fix .",
+        "lint": "eslint --max-warnings 0 .",
+        "prepare": "echo",
+        "cy:ci": "start-server-and-test start http://localhost:3000 cy:run"
+    },
+    "resolutions": {
+        "lodash": "4.17.21",
+        "xmldom": "0.6.0",
+        "glob-parent": "5.1.2",
+        "immer": "9.0.6",
+        "string-width": "^4.2.3",
+        "vm2": "^3.9.4",
+        "prismjs": "^1.25.0",
+        "xml-crypto": "^2.0.0",
+        "json-schema": "^0.4.0"
+    },
+    "lint-staged": {
+        "**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+            "prettier --write"
+        ],
+        "**/*.{js,jsx,ts,tsx}": [
+            "yarn lint:fix"
+        ]
+    },
+    "workspaces": [
+        "app",
+        "lighthouse",
+        "extractor",
+        "packages/**",
+        "pipeline"
+    ]
+}

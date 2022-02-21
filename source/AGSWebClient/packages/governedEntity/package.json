@@ -1,0 +1,19 @@
+{
+    "name": "@ags/webclient-governed-entity",
+    "version": "1.2.0",
+    "description": "AWS Governance Suite Web Client Governed Entity APP Module",
+    "private": true,
+    "author": "Amazon Web Services",
+    "license": "Apache-2.0",
+    "entry": "index.ts",
+    "scripts": {
+        "build": "tsc",
+        "test": "jest --silent --watch",
+        "test:cover": "jest --silent --passWithNoTests --colors --coverage"
+    },
+    "dependencies": {
+        "@ags/webclient-core": "1.2.0",
+        "@ags/webclient-governed-entity-core": "1.2.0",
+        "@ags/webclient-governed-entity-view": "1.2.0"
+    }
+}

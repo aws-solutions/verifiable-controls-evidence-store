@@ -1,0 +1,21 @@
+{
+  "name": "ags-evidence-store-solution",
+  "description": "AWS Governance Suite Evidence Store Solution",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "AGSEvidenceStore/app/lambda",
+    "AGSEvidenceStore/infra/lib/qldb-table-creator",
+    "AGSEvidenceStore/infra",
+    "AGSSecurityHubEvidenceCollector/app/lambda",
+    "AGSSecurityHubEvidenceCollector/infra/lib/evidence-store-onboarder",
+    "AGSSecurityHubEvidenceCollector/infra",
+    "AGSSharedInfra/infra/lambda/securityHeader",
+    "AGSSharedInfra/infra/lambda/tokenService",
+    "AGSSharedInfra/infra",
+    "shared-libs/**"
+  ],
+  "resolutions": {
+    "graceful-fs": "^4.2.4"
+  }
+}

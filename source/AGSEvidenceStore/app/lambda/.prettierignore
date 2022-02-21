@@ -1,0 +1,7 @@
+# Ignore artifacts:
+dist/
+.aws-sam/
+build
+coverage
+node_modules/
+doc/

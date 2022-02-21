@@ -1,0 +1,20 @@
+{
+    "name": "@ags/webclient-application-release",
+    "version": "1.2.0",
+    "description": "AWS Governance Suite Web Client Application Release App Module",
+    "private": true,
+    "author": "Amazon Web Services",
+    "license": "Apache-2.0",
+    "entry": "index.ts",
+    "scripts": {
+        "build": "tsc",
+        "test": "jest --silent --watch",
+        "test:cover": "jest --silent --passWithNoTests --colors --coverage"
+    },
+    "dependencies": {
+        "@ags/webclient-application-release-core": "1.2.0",
+        "@ags/webclient-application-release-view": "1.2.0",
+        "@ags/webclient-core": "1.2.0",
+        "@ags/webclient-estates-core": "1.2.0"
+    }
+}

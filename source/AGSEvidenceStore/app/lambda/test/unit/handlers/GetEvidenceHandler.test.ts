@@ -1,0 +1,99 @@
+/* 
+  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+  
+  Licensed under the Apache License, Version 2.0 (the "License").
+  You may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+      http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+import 'reflect-metadata';
+
+import { APIGatewayProxyEvent, Context } from 'aws-lambda';
+import { instance, mock, when } from 'ts-mockito';
+
+import { EvidenceService } from 'src/services/EvidenceService';
+import { FullEvidenceOutput } from 'src/types/EvidenceOutput';
+import { GetEvidenceHandler } from 'src/handlers/GetEvidenceHandler';
+
+describe('Get evidence handler tests', () => {
+    const service = mock(EvidenceService);
+    const handler = new GetEvidenceHandler(instance(service));
+
+    const evidenceOutput: FullEvidenceOutput = {
+        evidenceId: '1234',
+        providerId: '1234',
+        content: { succeed: true },
+        createdTimestamp: new Date().toISOString(),
+        targetId: 'target-id',
+        correlationId: 'correlationId',
+        schemaId: 'schema-id',
+        providerName: 'name',
+    };
+
+    test('returns 400 if path parameter is undefined', async () => {
+        // act
+        const result = () => handler.handle({} as APIGatewayProxyEvent, {} as Context);
+
+        // assert
+        await expect(result()).rejects.toEqual({
+            message: 'id path parameter is required and cannot be null or empty.',
+            statusCode: 400,
+            retryable: false,
+            name: 'AGSError',
+        });
+    });
+
+    test('returns 400 if no id parameter provided', async () => {
+        // act
+        const result = () =>
+            handler.handle(
+                { pathParameters: { random: 123 } } as unknown as APIGatewayProxyEvent,
+                {} as Context
+            );
+
+        // assert
+        await expect(result()).rejects.toEqual({
+            message: 'id path parameter is required and cannot be null or empty.',
+            statusCode: 400,
+            retryable: false,
+            name: 'AGSError',
+        });
+    });
+
+    test('return 200 with evidence', async () => {
+        // arrange
+        when(service.getEvidenceById('1234', undefined)).thenResolve(evidenceOutput);
+
+        // act
+        const result = await handler.handle(
+            { pathParameters: { id: '1234' } } as unknown as APIGatewayProxyEvent,
+            {} as Context
+        );
+
+        // assert
+        expect(result.statusCode).toBe(200);
+        const evidence = <FullEvidenceOutput>JSON.parse(result.body);
+        expect(evidence).not.toBeUndefined();
+    });
+
+    test('return 404 if evidence not found', async () => {
+        // arrange
+        when(service.getEvidenceById('1234', undefined)).thenResolve(undefined);
+
+        // act
+        const result = await handler.handle(
+            { pathParameters: { id: '1234' } } as unknown as APIGatewayProxyEvent,
+            {} as Context
+        );
+
+        // assert
+        expect(result.statusCode).toBe(404);
+    });
+});
