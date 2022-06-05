@@ -81,7 +81,8 @@ chmod +x ./run-unit-tests.sh
 
 1. Clone the solution source code from its GitHub repository. `git clone https://github.com/aws-solutions/verifiable-controls-evidence-store`
 2. Open the terminal and navigate to the source folder created in step 1. `cd verifiable-controls-evidence-store/source`
-3. To deploy the solution with its default configuration, run `node install.js`
+3. Set the deployment region `export AWS_REGION=<region-name>`, for a list of supported AWS region, refer to https://docs.aws.amazon.com/solutions/latest/verifiable-controls-evidence-store/design-considerations.html
+4. To deploy the solution with its default configuration, run `node install.js`
 
 ---
 
