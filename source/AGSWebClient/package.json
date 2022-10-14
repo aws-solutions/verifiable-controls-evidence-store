@@ -18,7 +18,7 @@
         "git-conventional-commits": "^1.1.0",
         "husky": "^7.0.2",
         "jest-when": "^3.4.2",
-        "lerna": "^4.0.0",
+        "lerna": "5.0.0",
         "lint-staged": "^11.1.2",
         "nanoid": "^3.2.0",
         "prettier": "^2.4.1",
@@ -46,7 +46,9 @@
         "vm2": "^3.9.4",
         "prismjs": "^1.25.0",
         "xml-crypto": "^2.0.0",
-        "json-schema": "^0.4.0"
+        "json-schema": "^0.4.0",
+        "parse-url": "^8.1.0",
+        "d3-color": "^3.1.0"
     },
     "lint-staged": {
         "**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
