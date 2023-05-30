@@ -13,15 +13,17 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render, fireEvent, act } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import ApplicationDetail from '.';
-import { QueryType } from '@ags/webclient-application-release-core/queries';
-import { useAgsQuery, useAgsMutation } from '@ags/webclient-core/queries';
-import { when } from 'jest-when';
-import { UserGroup } from '@ags/webclient-core/types';
-import { QueryType as EstateQueryType } from '@ags/webclient-estates-core/queries';
 import * as appContext from '@ags/webclient-core/containers/AppContext';
+
+import { act, fireEvent, render } from '@testing-library/react';
+import { useAgsMutation, useAgsQuery } from '@ags/webclient-core/queries';
+
+import ApplicationDetail from '.';
+import { BrowserRouter } from 'react-router-dom';
+import { QueryType as EstateQueryType } from '@ags/webclient-estates-core/queries';
+import { QueryType } from '@ags/webclient-application-release-core/queries';
+import { UserGroup } from '@ags/webclient-core/types';
+import { when } from 'jest-when';
 
 // Mocks
 const mockMutateFn = jest.fn();
@@ -53,7 +55,7 @@ const mockedUseAgsMutation = useAgsMutation as jest.Mock<any>;
 const fixtureGetApplication = {
     name: 'App1642352501882',
     description: 'Test application description',
-    applicationOwner: 'me@me.com',
+    applicationOwner: 'me@example.com',
     estateId: 'est-pt6oeb2u11',
     environmentIds: ['env-pt6oeb2u11-s5r21vnnqz', 'env-pt6oeb2u11-ch62t2lil7'],
     attributes: { dataClassification: 'PII', hostingConstruct: 'lambda' },
@@ -67,11 +69,11 @@ const fixtureGetApplication = {
         ciArtifactBucketName: 'dev-ags-ci-art-teamdev-app1642352501882',
         pipelineStackName: 'dev-App1642352501882-PipelineStack',
         pipelineArn:
-            'arn:aws:codepipeline:ap-southeast-2:126412716007:dev-App1642352501882-Pipeline',
+            'arn:aws:codepipeline:ap-southeast-2:111122223333:dev-App1642352501882-Pipeline',
         ciArtifactBucketRegion: 'ap-southeast-2',
         ciArtifactBucketUri: 's3://dev-ags-ci-art-teamdev-app1642352501882/app.zip',
         ciArtifactBucketKmsArn:
-            'arn:aws:kms:ap-southeast-2:126412716007:key/a02514da-0c5b-4473-a7a5-fd27b91f440f',
+            'arn:aws:kms:ap-southeast-2:111122223333:key/a02514da-0c5b-4473-a7a5-fd27b91f440f',
         ciArtifactBucketKey: 'app.zip',
     },
 };
@@ -81,7 +83,7 @@ const fixtureGetReleaseCandidates = {
         {
             releaseCandidateId: 'ooN5gFXgXIgoCuCZph8aaFlXWGUo8_UnQladSp2h5Wk',
             externalPipelineId:
-                'arn:aws:codepipeline:ap-southeast-2:126412716007:dev-App1642352501882-Pipeline',
+                'arn:aws:codepipeline:ap-southeast-2:111122223333:dev-App1642352501882-Pipeline',
             externalPipelineExecutionId: '8da5a3ee-5dde-444a-a942-d4fdb23ff5b3',
             applicationId: 'APP1642352501882',
             creationTime: '2022-01-16T17:14:27.028Z',
@@ -172,7 +174,7 @@ const fixtureGetEstate = {
     status: 'Active',
     environments: [
         {
-            awsAccountId: '878802839433',
+            awsAccountId: '111122223333',
             creationTime: '2021-10-25T22:45:15.578Z',
             estateId: 'est-pt6oeb2u11',
             name: 'DEV',
@@ -183,7 +185,7 @@ const fixtureGetEstate = {
             mandatory: true,
         },
         {
-            awsAccountId: '032806337907',
+            awsAccountId: '555555555555',
             creationTime: '2021-10-25T22:45:15.578Z',
             estateId: 'est-pt6oeb2u11',
             name: 'PROD',
@@ -197,7 +199,7 @@ const fixtureGetEstate = {
     id: 'est-pt6oeb2u11',
     name: 'ags-dev-sample-estate',
     parentBUId: 'd3d70a02-56d9-4c12-afcc-367d4c9d54ab',
-    toolingAccountId: '126412716007',
+    toolingAccountId: '444455556666',
 };
 
 describe('Application Details Page', () => {

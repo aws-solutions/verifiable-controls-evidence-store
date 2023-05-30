@@ -13,35 +13,38 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import {
-    BastionHostLinux,
-    ISubnet,
-    NatProvider,
-    SubnetConfiguration,
-    SubnetType,
-    Vpc,
-    InterfaceVpcEndpoint,
-    InterfaceVpcEndpointAwsService,
-    FlowLog,
-    FlowLogResourceType,
-    FlowLogDestination,
-} from 'aws-cdk-lib/aws-ec2';
-import * as ssm from 'aws-cdk-lib/aws-ssm';
 import * as cdk from 'aws-cdk-lib';
-import * as wafv2 from 'aws-cdk-lib/aws-wafv2';
 import * as iam from 'aws-cdk-lib/aws-iam';
-import * as logs from 'aws-cdk-lib/aws-logs';
 import * as kms from 'aws-cdk-lib/aws-kms';
-import { Tags } from 'aws-cdk-lib';
+import * as logs from 'aws-cdk-lib/aws-logs';
+import * as ssm from 'aws-cdk-lib/aws-ssm';
+import * as wafv2 from 'aws-cdk-lib/aws-wafv2';
+
 import {
     AGSBaseInfraStackProps,
     AGSConfiguration,
     IdentityProviderInfo,
 } from './ags-types';
+import {
+    BastionHostLinux,
+    FlowLog,
+    FlowLogDestination,
+    FlowLogResourceType,
+    ISubnet,
+    InterfaceVpcEndpoint,
+    InterfaceVpcEndpointAwsService,
+    IpAddresses,
+    NatProvider,
+    SubnetConfiguration,
+    SubnetType,
+    Vpc,
+} from 'aws-cdk-lib/aws-ec2';
+import { addCfnNagSuppression, addCfnNagSuppressionMeta } from './cfn-nag-suppression';
+
 import { AGS_SSM_PARAMETERS } from './ssm-parameter-names';
 import { Construct } from 'constructs';
+import { Tags } from 'aws-cdk-lib';
 import { kmsLogGroupPolicyStatement } from './kms-loggroup-policy';
-import { addCfnNagSuppression, addCfnNagSuppressionMeta } from './cfn-nag-suppression';
 
 export class AGSBaseInfraStack extends cdk.Stack {
     public readonly configuration: AGSConfiguration;
@@ -85,7 +88,7 @@ export class AGSBaseInfraStack extends cdk.Stack {
             {
                 cidrMask: 24,
                 name: 'service',
-                subnetType: SubnetType.PRIVATE_WITH_NAT,
+                subnetType: SubnetType.PRIVATE_WITH_EGRESS,
             },
             {
                 cidrMask: 28,
@@ -100,7 +103,7 @@ export class AGSBaseInfraStack extends cdk.Stack {
         const maxAZs = this.configuration.maxAZs || 2;
 
         this.vpc = new Vpc(this, 'vpc', {
-            cidr: vpcCidr,
+            ipAddresses: IpAddresses.cidr(vpcCidr),
             enableDnsHostnames: true,
             enableDnsSupport: true,
             maxAzs: maxAZs,
@@ -180,7 +183,7 @@ export class AGSBaseInfraStack extends cdk.Stack {
                 open: true,
                 privateDnsEnabled: true,
                 subnets: {
-                    subnetType: SubnetType.PRIVATE,
+                    subnetType: SubnetType.PRIVATE_WITH_EGRESS,
                 },
             });
 

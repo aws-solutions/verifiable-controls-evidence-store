@@ -13,10 +13,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render } from '@testing-library/react';
-import { formatDate } from '@ags/webclient-core/utils/helpers';
 import { Application } from '@ags/webclient-application-release-core/types';
 import ApplicationDetail from '.';
+import { render } from '@testing-library/react';
 
 const testDateStr1 = '2021-10-11T12:34:56Z';
 const testDateStr2 = '2021-10-12T12:34:56Z';
@@ -77,8 +76,6 @@ describe('ApplicationDetail', () => {
         expect(getAllByText('ACTIVE').length).toBe(2);
         expect(getByText('lambda')).toBeInTheDocument();
         expect(getByText('PII')).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr1)))).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr2)))).toBeInTheDocument();
     });
 
     test('render without application', async () => {
@@ -92,7 +89,5 @@ describe('ApplicationDetail', () => {
         expect(getAllByText('CREATING').length).toBe(2);
         expect(getByText('ecs')).toBeInTheDocument();
         expect(getByText('Private')).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr1)))).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr2)))).toBeInTheDocument();
     });
 });

@@ -62,8 +62,6 @@ export interface IdentityProviderInfo {
     loginUrl: string;
     displayNameAttributeName: string;
     userGroupAttributeName: string;
-    // COGNITO Attributes
-    domainPrefix?: string;
 }
 
 export interface WebClientConfig {

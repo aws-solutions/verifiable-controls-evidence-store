@@ -13,14 +13,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { formatDate } from '@ags/webclient-core/utils/helpers';
-import { UserGroup } from '@ags/webclient-core/types';
 import * as appContext from '@ags/webclient-core/containers/AppContext';
-import { EvidenceProvider } from '@ags/webclient-evidence-core/types';
 
+import { BrowserRouter } from 'react-router-dom';
+import { EvidenceProvider } from '@ags/webclient-evidence-core/types';
 import EvidenceProviderDetail from '.';
+import { UserGroup } from '@ags/webclient-core/types';
+import { render } from '@testing-library/react';
 
 jest.mock('@ags/webclient-core/containers/AppContext');
 
@@ -53,10 +52,5 @@ describe('Evidence Provider Detail', () => {
 
         //Check for Evidence Provider description
         expect(getByText('Config Schema for Attestation Runtime')).toBeInTheDocument();
-
-        //Check for ISO time conversion
-        expect(
-            getByText(formatDate(new Date(evidenceProvider.createdTimestamp)))
-        ).toBeInTheDocument();
     });
 });

@@ -13,23 +13,24 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+import * as apiGateway from 'aws-cdk-lib/aws-apigateway';
 import * as cdk from 'aws-cdk-lib';
-import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import * as iam from 'aws-cdk-lib/aws-iam';
+import * as kms from 'aws-cdk-lib/aws-kms';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as lambdaNodeJs from 'aws-cdk-lib/aws-lambda-nodejs';
-import * as iam from 'aws-cdk-lib/aws-iam';
-import * as ssm from 'aws-cdk-lib/aws-ssm';
-import * as apiGateway from 'aws-cdk-lib/aws-apigateway';
-import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as logs from 'aws-cdk-lib/aws-logs';
-import * as kms from 'aws-cdk-lib/aws-kms';
-import { AGSWebClientStackProps } from './ags-types';
-import { AGSTokenService } from './ags-tokenservice';
-import { CognitoAuth } from './ags-cognito-auth';
 import * as path from 'path';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as ssm from 'aws-cdk-lib/aws-ssm';
+
+import { AGSTokenService } from './ags-tokenservice';
+import { AGSWebClientStackProps } from './ags-types';
+import { CognitoAuth } from './ags-cognito-auth';
 import { Construct } from 'constructs';
-import { kmsLogGroupPolicyStatement } from './kms-loggroup-policy';
 import { addCfnNagSuppression } from './cfn-nag-suppression';
+import { kmsLogGroupPolicyStatement } from './kms-loggroup-policy';
 
 export class AGSWebClientStack extends cdk.Stack {
     public webClientDistributionId: string;
@@ -158,7 +159,7 @@ export class AGSWebClientStack extends cdk.Stack {
                 this,
                 'SecurityHeaderFunction',
                 {
-                    runtime: lambda.Runtime.NODEJS_14_X,
+                    runtime: lambda.Runtime.NODEJS_18_X,
                     handler: 'handler',
                     entry: path.join(__dirname, '..', 'lambda/securityHeader/index.ts'),
                     timeout: cdk.Duration.seconds(15),
@@ -309,6 +310,7 @@ export class AGSWebClientStack extends cdk.Stack {
                 versioned: true,
                 blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
                 encryption: s3.BucketEncryption.S3_MANAGED,
+                objectOwnership: s3.ObjectOwnership.OBJECT_WRITER,
             });
 
             addCfnNagSuppression(loggingBucket as Construct, [
@@ -383,11 +385,10 @@ export class AGSWebClientStack extends cdk.Stack {
                 const logoutUrl = `${baseUrl}/getStarted`;
 
                 const auth = new CognitoAuth(this, 'CognitoAuth', {
-                    domainPrefix:
-                        props.configuration.identityProvider.domainPrefix || 'agsweb',
                     externalUserRoleArn: externalUserRoleArn,
                     callbackUrl,
                     logoutUrl,
+                    removalPolicy,
                 });
 
                 // write cognito settings to SSM parameters

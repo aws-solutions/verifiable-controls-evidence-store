@@ -13,12 +13,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { EventBridgeEvent } from 'aws-lambda';
-import { SecurityHubFinding } from 'src/SecurityHubEvent';
 import {
     filterFindingsWithAcceptedSuffixes,
     getAgsRelatedFindings,
 } from 'src/SecurityHubFindingHelper';
+
+import { EventBridgeEvent } from 'aws-lambda';
+import { SecurityHubFinding } from 'src/SecurityHubEvent';
 
 describe('SecurityHubFindingHelper tests', () => {
     const findingSourceProductArns = ['macie$', 'guardduty$'];
@@ -78,12 +79,12 @@ describe('SecurityHubFindingHelper tests', () => {
                 findings: [
                     {
                         ProductArn:
-                            'arn:aws:securityhub:ap-southeast-2:1234:product-subscription/aws/beer-service',
+                            'arn:aws:securityhub:ap-southeast-2:111122223333:product-subscription/aws/beer-service',
                         Resources: [{ Id: 'Id1' }, { Id: 'Id2' }],
                     },
                     {
                         ProductArn:
-                            'arn:aws:securityhub:ap-southeast-2:1234:product-subscription/aws/infinidash',
+                            'arn:aws:securityhub:ap-southeast-2:111122223333:product-subscription/aws/infinidash',
                         Resources: [{ Id: 'Id5' }, { Id: 'Id4' }, { Id: 'Id77' }],
                     },
                 ],
@@ -102,12 +103,12 @@ describe('SecurityHubFindingHelper tests', () => {
                 findings: [
                     {
                         ProductArn:
-                            'arn:aws:securityhub:ap-southeast-2:1234:product-subscription/aws/macie',
+                            'arn:aws:securityhub:ap-southeast-2:111122223333:product-subscription/aws/macie',
                         Resources: [{ Id: 'Id1' }, { Id: 'Id2' }],
                     },
                     {
                         ProductArn:
-                            'arn:aws:securityhub:ap-southeast-2:1234:product-subscription/aws/guardduty',
+                            'arn:aws:securityhub:ap-southeast-2:111122223333:product-subscription/aws/guardduty',
                         Resources: [{ Id: 'Id5' }, { Id: 'Id4' }, { Id: 'Id77' }],
                     },
                 ],
@@ -126,12 +127,12 @@ describe('SecurityHubFindingHelper tests', () => {
                 findings: [
                     {
                         ProductArn:
-                            'arn:aws:securityhub:ap-southeast-2:1234:product-subscription/aws/beer-service',
+                            'arn:aws:securityhub:ap-southeast-2:111122223333:product-subscription/aws/beer-service',
                         Resources: [{ Id: 'Id1' }, { Id: 'Id2' }, { Id: 'Id3' }],
                     },
                     {
                         ProductArn:
-                            'arn:aws:securityhub:ap-southeast-2:1234:product-subscription/aws/macie',
+                            'arn:aws:securityhub:ap-southeast-2:111122223333:product-subscription/aws/macie',
                         Resources: [{ Id: 'Id5' }, { Id: 'Id4' }, { Id: 'Id77' }],
                     },
                 ],
@@ -144,7 +145,7 @@ describe('SecurityHubFindingHelper tests', () => {
         const expectedFindings = [
             {
                 ProductArn:
-                    'arn:aws:securityhub:ap-southeast-2:1234:product-subscription/aws/macie',
+                    'arn:aws:securityhub:ap-southeast-2:111122223333:product-subscription/aws/macie',
                 Resources: [{ Id: 'Id5' }, { Id: 'Id4' }, { Id: 'Id77' }],
             },
         ];
@@ -157,17 +158,17 @@ describe('SecurityHubFindingHelper tests', () => {
                 findings: [
                     {
                         ProductArn:
-                            'arn:aws:securityhub:ap-southeast-2:1234:product-subscription/aws/beer-service',
+                            'arn:aws:securityhub:ap-southeast-2:111122223333:product-subscription/aws/beer-service',
                         Resources: [{ Id: 'Id1' }, { Id: 'Id2' }, { Id: 'Id3' }],
                     },
                     {
                         ProductArn:
-                            'arn:aws:securityhub:ap-southeast-2:1234:product-subscription/aws/macie',
+                            'arn:aws:securityhub:ap-southeast-2:111122223333:product-subscription/aws/macie',
                         Resources: [{ Id: 'Id55' }, { Id: 'Id44' }, { Id: 'Id77' }],
                     },
                     {
                         ProductArn:
-                            'arn:aws:securityhub:ap-southeast-2:1234:product-subscription/aws/guardduty',
+                            'arn:aws:securityhub:ap-southeast-2:111122223333:product-subscription/aws/guardduty',
                         Resources: [{ Id: 'Id5' }, { Id: 'Id4' }, { Id: 'Id7' }],
                     },
                 ],
@@ -180,12 +181,12 @@ describe('SecurityHubFindingHelper tests', () => {
         const expectedFindings = [
             {
                 ProductArn:
-                    'arn:aws:securityhub:ap-southeast-2:1234:product-subscription/aws/macie',
+                    'arn:aws:securityhub:ap-southeast-2:111122223333:product-subscription/aws/macie',
                 Resources: [{ Id: 'Id55' }, { Id: 'Id44' }, { Id: 'Id77' }],
             },
             {
                 ProductArn:
-                    'arn:aws:securityhub:ap-southeast-2:1234:product-subscription/aws/guardduty',
+                    'arn:aws:securityhub:ap-southeast-2:111122223333:product-subscription/aws/guardduty',
                 Resources: [{ Id: 'Id5' }, { Id: 'Id4' }, { Id: 'Id7' }],
             },
         ];

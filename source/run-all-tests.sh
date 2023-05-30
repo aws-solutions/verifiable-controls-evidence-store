@@ -59,7 +59,6 @@ run_app_test() {
     # run unit tests
     yarn run test
     # prepare coverage reports
-	prepare_jest_coverage_report AGSSharedInfraSecurityHeader ../coverage/securityHeader
 	popd
 
     echo "cd AGSSharedInfra/infra/lambda/tokenService"

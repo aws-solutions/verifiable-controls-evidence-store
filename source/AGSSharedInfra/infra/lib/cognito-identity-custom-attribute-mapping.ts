@@ -14,9 +14,10 @@
   limitations under the License.
 */
 import * as cdk from 'aws-cdk-lib';
+import * as cr from 'aws-cdk-lib/custom-resources';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
-import * as cr from 'aws-cdk-lib/custom-resources';
+
 import { Construct } from 'constructs';
 
 export interface CognitoIdentityCustomAttributeMappingProps {
@@ -77,7 +78,7 @@ export class CognitoIdentityCustomAttributeMapping extends Construct {
 
         this.customProvider = new cr.Provider(this, 'customProvider', {
             onEventHandler: new lambda.Function(this, 'customerProvierLambda', {
-                runtime: lambda.Runtime.NODEJS_14_X,
+                runtime: lambda.Runtime.NODEJS_16_X,
                 handler: 'index.handler',
                 code: lambda.Code.fromInline(lambdaCode),
                 role: this.customProviderRole,

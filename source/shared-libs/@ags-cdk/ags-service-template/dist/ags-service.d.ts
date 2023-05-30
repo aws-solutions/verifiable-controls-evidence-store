@@ -26,7 +26,7 @@ export declare class AGSService extends Construct {
      *
      * @returns the current configuration
      */
-    getCurrentConfig(): Record<string, string> | undefined;
+    getCurrentConfig(): Record<string, any> | undefined;
     /**
      * Retrieves KMS keys by name
      *

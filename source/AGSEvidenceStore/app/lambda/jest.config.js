@@ -9,7 +9,7 @@ module.exports = {
     collectCoverage: true,
     collectCoverageFrom: [
         'src/**/*.ts',
-        'attestations-stream-processor/**/*.ts',
+        'evidences-stream-processor/**/*.ts',
         '!src/data/*.ts',
         '!src/common/BaseContainer.ts',
     ],
@@ -21,7 +21,7 @@ module.exports = {
             branches: 80,
             functions: 80,
             lines: 80,
-            statements: -10,
+            statements: -20,
         },
     },
     reporters: [

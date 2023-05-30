@@ -14,7 +14,7 @@
   limitations under the License.
 */
 import { FunctionComponent, useMemo } from 'react';
-import Table, { Column } from 'aws-northstar/components/Table';
+import Table from 'aws-northstar/components/Table';
 import { formatDate } from '@ags/webclient-core/utils/helpers';
 import Link from 'aws-northstar/components/Link';
 import { EvidenceProvider } from '@ags/webclient-evidence-core/types';
@@ -31,7 +31,7 @@ interface EvidenceProviderTableProps {
     onCreate?: () => void;
 }
 
-const getColumnDefinitions = (): Column<EvidenceProvider>[] => {
+const getColumnDefinitions = (): any[] => {
     return [
         {
             id: 'name',
@@ -85,7 +85,7 @@ const getColumnDefinitions = (): Column<EvidenceProvider>[] => {
             id: 'schemas',
             width: 50,
             Header: 'Number of Evidence Types',
-            accessor: (row) => (row.schemas ? row.schemas.length : 0),
+            accessor: (row: any) => (row.schemas ? row.schemas.length : 0),
         },
     ];
 };

@@ -38,7 +38,7 @@ export type SubnetMappingOptions = {
 
 export type AGSEnvironments = Record<string, AGSEnvironment>;
 
-export type Configuration = Record<string, string>;
+export type Configuration = Record<string, any>;
 
 export enum SubnetGroup {
     INGRESS = 'ingress',

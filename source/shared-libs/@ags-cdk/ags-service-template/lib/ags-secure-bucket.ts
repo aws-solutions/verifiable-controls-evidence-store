@@ -49,7 +49,6 @@ export class AgsSecureBucket extends Construct {
             blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
             accessControl: s3.BucketAccessControl.LOG_DELIVERY_WRITE,
             versioned: true,
-            serverAccessLogsPrefix: 'access-log',
         });
 
         this.bucket.addToResourcePolicy(

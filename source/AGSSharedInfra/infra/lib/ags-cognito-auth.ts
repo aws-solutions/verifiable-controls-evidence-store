@@ -18,14 +18,15 @@
 
 import * as cdk from 'aws-cdk-lib';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
+
 import { CognitoIdentityCustomAttributeMapping } from './cognito-identity-custom-attribute-mapping';
 import { Construct } from 'constructs';
 
 export interface CognitoAuthProps {
-    domainPrefix: string;
     externalUserRoleArn: string;
     callbackUrl: string;
     logoutUrl: string;
+    removalPolicy: cdk.RemovalPolicy;
 }
 
 export class CognitoAuth extends Construct {
@@ -57,9 +58,7 @@ export class CognitoAuth extends Construct {
         this.userPoolId = userPool.userPoolId;
 
         const domain = userPool.addDomain('CognitoDomain', {
-            cognitoDomain: {
-                domainPrefix: props.domainPrefix,
-            },
+            cognitoDomain: { domainPrefix: `${cdk.Aws.REGION}-${cdk.Aws.ACCOUNT_ID}` },
         });
         this.cognitoDomain = `${domain.domainName}.auth.${cdk.Aws.REGION}.amazoncognito.com`;
 

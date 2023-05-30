@@ -34,4 +34,5 @@ export interface AttachmentData {
     bucketName: string;
     objectKey: string;
     hash: string;
+    size?: number;
 }

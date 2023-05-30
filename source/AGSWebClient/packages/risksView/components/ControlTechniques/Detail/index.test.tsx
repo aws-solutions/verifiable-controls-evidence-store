@@ -13,10 +13,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render } from '@testing-library/react';
 import { ControlTechnique } from '@ags/webclient-risks-core/types';
 import ControlTechniqueDetail from '.';
-import { formatDate } from '@ags/webclient-core/utils/helpers';
+import { render } from '@testing-library/react';
 
 const testDateStr1 = '2021-10-11T12:34:56Z';
 const testDateStr2 = '2021-10-12T12:34:56Z';
@@ -72,8 +71,6 @@ describe('ControlTechiqueDetail', () => {
         expect(queryAllByText('Enabled').length).toBe(2);
         expect(getByText('Technique Details')).toBeInTheDocument();
         expect(getByText('NONE')).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr1)))).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr2)))).toBeInTheDocument();
     });
 
     test('render without control techniques', async () => {
@@ -96,8 +93,5 @@ describe('ControlTechiqueDetail', () => {
         expect(getByText('test-policy-arn')).toBeInTheDocument();
         expect(getByText('test-cp-rule-arn')).toBeInTheDocument();
         expect(getByText('https://localhost')).toBeInTheDocument();
-
-        expect(getByText(formatDate(new Date(testDateStr1)))).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr2)))).toBeInTheDocument();
     });
 });

@@ -1,81 +1,50 @@
 {
-  "_args": [
-    [
-      "@apjsb-serverless-lib/lambda-router@1.0.9",
-      "/Users/vovan/projects/amazon/ags-evidencestore/app/lambda"
-    ]
-  ],
-  "_from": "@apjsb-serverless-lib/lambda-router@1.0.9",
-  "_id": "@apjsb-serverless-lib/lambda-router@1.0.9",
-  "_inBundle": false,
-  "_integrity": "sha512-QjefYWNqh9DbTb0wp3ZWztRKfn71TvfCy5PRWpW3TKwFFxFlaiTMyAp0OJZV9nHcPuRFAWBM5o8bMs9zPNbMfw==",
-  "_location": "/@apjsb-serverless-lib/lambda-router",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "version",
-    "registry": true,
-    "raw": "@apjsb-serverless-lib/lambda-router@1.0.9",
     "name": "@apjsb-serverless-lib/lambda-router",
-    "escapedName": "@apjsb-serverless-lib%2flambda-router",
-    "scope": "@apjsb-serverless-lib",
-    "rawSpec": "1.0.9",
-    "saveSpec": null,
-    "fetchSpec": "1.0.9"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://apj-solution-builders-044817409007.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/Apjsb-ServerlessLibrary/@apjsb-serverless-lib/lambda-router/-/lambda-router-1.0.9.tgz",
-  "_spec": "1.0.9",
-  "_where": "/Users/vovan/projects/amazon/ags-evidencestore/app/lambda",
-  "author": {
-    "name": "Amazon Web Services"
-  },
-  "dependencies": {
-    "@apjsb-serverless-lib/common-types": "^1.0.10",
-    "@apjsb-serverless-lib/logger": "^2.0.11",
-    "@apjsb-serverless-lib/middleware-chain": "^1.0.9",
-    "reflect-metadata": "^0.1.13",
-    "tsyringe": "^4.4.0"
-  },
-  "description": "A generic lambda handler that routes requests based on lambda event",
-  "devDependencies": {
-    "@types/aws-lambda": "^8.10.70",
-    "@types/jest": "^26.0.20",
-    "@typescript-eslint/eslint-plugin": "^4.13.0",
-    "@typescript-eslint/parser": "^4.13.0",
-    "eslint": "^7.17.0",
-    "eslint-config-prettier": "^7.1.0",
-    "eslint-plugin-header": "^3.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "jest": "^26.6.3",
-    "jest-junit": "^12.0.0",
-    "prettier": "^2.2.1",
-    "source-map-support": "^0.5.19",
-    "ts-jest": "^26.4.4",
-    "ts-loader": "^8.0.14",
-    "ts-mockito": "^2.6.1",
-    "typescript": "4.1.5"
-  },
-  "files": [
-    "dist/**/*"
-  ],
-  "gitHead": "449962a5d0cf542235248e98f515dcd51e030114",
-  "license": "Apache-2.0",
-  "main": "dist/lib/index.js",
-  "name": "@apjsb-serverless-lib/lambda-router",
-  "publishConfig": {
-    "registry": "https://apj-solution-builders-044817409007.d.codeartifact.ap-southeast-2.amazonaws.com/npm/Apjsb-ServerlessLibrary/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "ssh://git.amazon.com/pkg/Apjsb-ServerlessLibrary"
-  },
-  "scripts": {
-    "build": "tsc --project tsconfig.production.json",
-    "lint": "eslint --fix --ext .ts .",
-    "test": "jest --silent"
-  },
-  "types": "dist/lib/index.d.ts",
-  "version": "1.0.9"
+    "version": "1.0.9",
+    "description": "A generic lambda handler that routes requests based on lambda event",
+    "main": "dist/lib/index.js",
+    "types": "dist/lib/index.d.ts",
+    "files": [
+        "dist/**/*"
+    ],
+    "scripts": {
+        "test": "jest --silent",
+        "build": "tsc --project tsconfig.production.json",
+        "lint": "eslint --fix --ext .ts ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "ssh://git.amazon.com/pkg/Apjsb-ServerlessLibrary"
+    },
+    "publishConfig": {
+        "registry": "https://apj-solution-builders-044817409007.d.codeartifact.ap-southeast-2.amazonaws.com/npm/Apjsb-ServerlessLibrary/"
+    },
+    "author": "Amazon Web Services",
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "@types/aws-lambda": "^8.10.70",
+        "@types/jest": "^26.0.20",
+        "@typescript-eslint/eslint-plugin": "^4.13.0",
+        "@typescript-eslint/parser": "^4.13.0",
+        "eslint": "^7.17.0",
+        "eslint-config-prettier": "^7.1.0",
+        "eslint-plugin-header": "^3.1.0",
+        "eslint-plugin-prettier": "^3.3.1",
+        "jest": "^26.6.3",
+        "jest-junit": "^12.0.0",
+        "prettier": "^2.2.1",
+        "source-map-support": "^0.5.19",
+        "ts-jest": "^26.4.4",
+        "ts-loader": "^8.0.14",
+        "ts-mockito": "^2.6.1",
+        "typescript": "4.1.5"
+    },
+    "dependencies": {
+        "@apjsb-serverless-lib/common-types": "^1.0.10",
+        "@apjsb-serverless-lib/logger": "^2.0.11",
+        "@apjsb-serverless-lib/middleware-chain": "^1.0.9",
+        "reflect-metadata": "^0.1.13",
+        "tsyringe": "^4.4.0"
+    },
+    "gitHead": "449962a5d0cf542235248e98f515dcd51e030114"
 }

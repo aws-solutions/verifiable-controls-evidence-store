@@ -14,11 +14,14 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+
 import 'source-map-support/register';
+
 import * as cdk from 'aws-cdk-lib';
-import { AGSSharedInfraStage } from '../lib/ags-shared-infra-stage';
-import * as path from 'path';
 import * as fs from 'fs';
+import * as path from 'path';
+
+import { AGSSharedInfraStage } from '../lib/ags-shared-infra-stage';
 
 function validateName(name?: string): boolean {
     return !!name && /^[a-zA-Z0-9\-_]+$/.test(name.trim());

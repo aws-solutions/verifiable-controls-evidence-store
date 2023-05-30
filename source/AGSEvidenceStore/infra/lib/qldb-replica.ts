@@ -13,23 +13,25 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+import * as appConfig from '../../app/lambda/src/common/configuration/AppConfiguration';
 import * as cdk from 'aws-cdk-lib';
+import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as kinesis from 'aws-cdk-lib/aws-kinesis';
 import * as kms from 'aws-cdk-lib/aws-kms';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as lambdaEvent from 'aws-cdk-lib/aws-lambda-event-sources';
+import * as opensearch from 'aws-cdk-lib/aws-opensearchservice';
 import * as path from 'path';
 import * as qldb from 'aws-cdk-lib/aws-qldb';
-import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as sqs from 'aws-cdk-lib/aws-sqs';
-import * as opensearch from 'aws-cdk-lib/aws-opensearchservice';
+
 import {
     AGSLambdaFunction,
     AGSService,
     SubnetGroup,
 } from '@ags-cdk/ags-service-template';
-import * as appConfig from '../../app/lambda/src/common/configuration/AppConfiguration';
+
 import { Construct } from 'constructs';
 
 export interface QldbReplicaProps {
@@ -121,7 +123,7 @@ export class QldbReplica extends Construct {
             );
         }
 
-        const azCount = props.service.sharedInfraClient.vpc.isolatedSubnets.length;
+        const azCount = props.service.sharedInfraClient.vpc.availabilityZones.length;
 
         const zoneAwareness: opensearch.ZoneAwarenessConfig = { enabled: true };
 
@@ -161,7 +163,7 @@ export class QldbReplica extends Construct {
         const domainName = 'ags-evidence-read-replica';
         this.readReplica = new opensearch.Domain(this, 'evidence-open-search-domain', {
             domainName,
-            version: opensearch.EngineVersion.OPENSEARCH_1_0,
+            version: opensearch.EngineVersion.openSearch('2.3'),
             capacity: {
                 masterNodes: 3,
                 dataNodes: azCount,
@@ -251,7 +253,7 @@ export class QldbReplica extends Construct {
                 )
             ),
             handler: 'index.handler',
-            runtime: lambda.Runtime.NODEJS_14_X,
+            runtime: lambda.Runtime.NODEJS_18_X,
             environment: environmentVarialbes,
             service: props.service,
             initialPolicy: [

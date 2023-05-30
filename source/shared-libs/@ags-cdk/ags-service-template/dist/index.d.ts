@@ -10,3 +10,4 @@ export * from './ags-secure-bucket';
 export * from './ags-service-alarm-notification';
 export * from './ags-api-canary';
 export * from './ags-aspects';
+export * from './aws-python-lambda';

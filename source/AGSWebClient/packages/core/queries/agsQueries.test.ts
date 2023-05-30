@@ -13,7 +13,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { useQuery, useInfiniteQuery, useQueries } from 'react-query';
+import {
+    useQuery,
+    useInfiniteQuery,
+    useQueries,
+    QueryFunctionContext,
+} from 'react-query';
 import { QueryBase, AgsApiOptions } from '@ags/webclient-core/queries';
 import {
     useAgsQuery,
@@ -79,7 +84,7 @@ const userCredentials = {
 
 mockUseQuery.mockImplementation((keys) => {
     return defaultQueryFn(
-        { queryKey: keys },
+        { queryKey: keys } as unknown as QueryFunctionContext,
         queryMap,
         serviceEndpoints,
         userCredentials
@@ -88,7 +93,7 @@ mockUseQuery.mockImplementation((keys) => {
 
 mockUseInfiniteQuery.mockImplementation((params) => {
     return defaultQueryFn(
-        { queryKey: params.queryKey },
+        { queryKey: params.queryKey } as unknown as QueryFunctionContext,
         queryMap,
         serviceEndpoints,
         userCredentials
@@ -475,13 +480,17 @@ describe('getQueryClientParameters', () => {
         mockInvokeAgsApi.mockResolvedValueOnce({ value: 'Succeed' });
 
         await expect(
-            queryFn({ queryKey: ['TestQuery', 'key1', 'key2'] })
+            queryFn({
+                queryKey: ['TestQuery', 'key1', 'key2'],
+            } as unknown as QueryFunctionContext)
         ).resolves.toEqual({
             value: 'Succeed',
         });
 
         await expect(
-            queryFn({ queryKey: ['TestQueryNotExist', 'key1', 'key2'] })
+            queryFn({
+                queryKey: ['TestQueryNotExist', 'key1', 'key2'],
+            } as unknown as QueryFunctionContext)
         ).rejects.toEqual(new Error('Unable to find query TestQueryNotExist'));
     });
 });

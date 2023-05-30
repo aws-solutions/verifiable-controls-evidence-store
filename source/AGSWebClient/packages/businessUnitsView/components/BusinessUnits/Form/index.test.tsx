@@ -13,8 +13,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render, fireEvent, act } from '@testing-library/react';
 import BusinessUnitForm, { BusinessUnitFormData } from '.';
+import { act, fireEvent, render } from '@testing-library/react';
+
 import { BrowserRouter } from 'react-router-dom';
 import { BusinessUnitSummary } from '@ags/webclient-business-units-core/types';
 
@@ -22,9 +23,9 @@ const businessUnit: BusinessUnitFormData = {
     parentId: 'id-3',
     name: 'Test Business Unit',
     description: 'Description Test Business',
-    businessOwner: 'business@test.com',
-    riskOwner: 'risk@test.com',
-    techOwner: 'tech@test.com',
+    businessOwner: 'business@example.com',
+    riskOwner: 'risk@example.com',
+    techOwner: 'tech@example.com',
 };
 
 const parentBusinessUnits: BusinessUnitSummary[] = [
@@ -88,19 +89,19 @@ describe('BusinessUnitForm', () => {
                 getAllByRole('textbox').filter(
                     (element) => element.id === 'businessOwner'
                 )[0],
-                { target: { value: 'business@test.com' } }
+                { target: { value: 'business@example.com' } }
             );
             fireEvent.change(
                 getAllByRole('textbox').filter(
                     (element) => element.id === 'riskOwner'
                 )[0],
-                { target: { value: 'risk@test.com' } }
+                { target: { value: 'risk@example.com' } }
             );
             fireEvent.change(
                 getAllByRole('textbox').filter(
                     (element) => element.id === 'techOwner'
                 )[0],
-                { target: { value: 'tech@test.com' } }
+                { target: { value: 'tech@example.com' } }
             );
         });
         expect(await findByText('Submit')).toBeVisible();
@@ -109,9 +110,9 @@ describe('BusinessUnitForm', () => {
             {
                 name: 'Test Business Unit',
                 description: 'Description Test Business',
-                businessOwner: 'business@test.com',
-                riskOwner: 'risk@test.com',
-                techOwner: 'tech@test.com',
+                businessOwner: 'business@example.com',
+                riskOwner: 'risk@example.com',
+                techOwner: 'tech@example.com',
                 parentName: 'Test Enterprise',
             },
             expect.any(Object),
@@ -150,19 +151,19 @@ describe('BusinessUnitForm', () => {
                 getAllByRole('textbox').filter(
                     (element) => element.id === 'businessOwner'
                 )[0],
-                { target: { value: 'business@test.com' } }
+                { target: { value: 'business@example.com' } }
             );
             fireEvent.change(
                 getAllByRole('textbox').filter(
                     (element) => element.id === 'riskOwner'
                 )[0],
-                { target: { value: 'risk@test.com' } }
+                { target: { value: 'risk@example.com' } }
             );
             fireEvent.change(
                 getAllByRole('textbox').filter(
                     (element) => element.id === 'techOwner'
                 )[0],
-                { target: { value: 'tech@test.com' } }
+                { target: { value: 'tech@example.com' } }
             );
         });
         act(() => {
@@ -203,9 +204,9 @@ describe('BusinessUnitForm', () => {
         expect(getByText('Test BU 2')).toBeInTheDocument();
         expect(getByDisplayValue('Test Business Unit')).toBeInTheDocument();
         expect(getByText('Description Test Business')).toBeInTheDocument();
-        expect(getByDisplayValue('business@test.com')).toBeInTheDocument();
-        expect(getByDisplayValue('risk@test.com')).toBeInTheDocument();
-        expect(getByDisplayValue('tech@test.com')).toBeInTheDocument();
+        expect(getByDisplayValue('business@example.com')).toBeInTheDocument();
+        expect(getByDisplayValue('risk@example.com')).toBeInTheDocument();
+        expect(getByDisplayValue('tech@example.com')).toBeInTheDocument();
 
         act(() => {
             fireEvent.change(getAllByTestId('select')[0].children[1], {
@@ -225,19 +226,19 @@ describe('BusinessUnitForm', () => {
                 getAllByRole('textbox').filter(
                     (element) => element.id === 'businessOwner'
                 )[0],
-                { target: { value: 'newbusiness@test.com' } }
+                { target: { value: 'newbusiness@example.com' } }
             );
             fireEvent.change(
                 getAllByRole('textbox').filter(
                     (element) => element.id === 'riskOwner'
                 )[0],
-                { target: { value: 'newrisk@test.com' } }
+                { target: { value: 'newrisk@example.com' } }
             );
             fireEvent.change(
                 getAllByRole('textbox').filter(
                     (element) => element.id === 'techOwner'
                 )[0],
-                { target: { value: 'newtech@test.com' } }
+                { target: { value: 'newtech@example.com' } }
             );
         });
         expect(await findByText('Submit')).toBeVisible();
@@ -247,9 +248,9 @@ describe('BusinessUnitForm', () => {
                 parentId: 'id-2',
                 name: 'New Test Business Unit',
                 description: 'New Description Test Business',
-                businessOwner: 'newbusiness@test.com',
-                riskOwner: 'newrisk@test.com',
-                techOwner: 'newtech@test.com',
+                businessOwner: 'newbusiness@example.com',
+                riskOwner: 'newrisk@example.com',
+                techOwner: 'newtech@example.com',
             },
             expect.any(Object),
             expect.any(Function)

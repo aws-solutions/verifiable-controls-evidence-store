@@ -31,28 +31,28 @@ export class EvidenceStoreDatabaseDashboard {
             this.qldbMetric(
                 'StartSessionRequest',
                 'CommandLatency',
-                cw.Statistic.AVERAGE,
+                cw.Stats.AVERAGE,
                 cw.Unit.MILLISECONDS,
                 { CommandType: 'StartSessionRequest' }
             ),
             this.qldbMetric(
                 'StartTransactionRequest',
                 'CommandLatency',
-                cw.Statistic.AVERAGE,
+                cw.Stats.AVERAGE,
                 cw.Unit.MILLISECONDS,
                 { CommandType: 'StartTransactionRequest' }
             ),
             this.qldbMetric(
                 'ExecuteStatementRequest',
                 'CommandLatency',
-                cw.Statistic.AVERAGE,
+                cw.Stats.AVERAGE,
                 cw.Unit.MILLISECONDS,
                 { CommandType: 'ExecuteStatementRequest' }
             ),
             this.qldbMetric(
                 'CommitTransactionRequest',
                 'CommandLatency',
-                cw.Statistic.AVERAGE,
+                cw.Stats.AVERAGE,
                 cw.Unit.MILLISECONDS,
                 { CommandType: 'CommitTransactionRequest' }
             ),
@@ -77,7 +77,7 @@ export class EvidenceStoreDatabaseDashboard {
                     metricName: 'ClusterStatus.red',
                     namespace: 'AWS/ES',
                     color: '#C00',
-                    statistic: cw.Statistic.MAXIMUM,
+                    statistic: cw.Stats.MAXIMUM,
                     dimensionsMap: {
                         DomainName: this.esDomain,
                         ClientId: this.accountNumber,
@@ -87,24 +87,24 @@ export class EvidenceStoreDatabaseDashboard {
             leftYAxis: { min: 0, max: 1, showUnits: false },
         }),
         this.databaseWidget('ElasticSearch Response Count', [
-            this.esMetric('2xx', '2xx', cw.Statistic.SUM, cw.Unit.COUNT),
-            this.esMetric('3xx', '3xx', cw.Statistic.SUM, cw.Unit.COUNT),
-            this.esMetric('4xx', '4xx', cw.Statistic.SUM, cw.Unit.COUNT),
-            this.esMetric('5xx', '5xx', cw.Statistic.SUM, cw.Unit.COUNT),
+            this.esMetric('2xx', '2xx', cw.Stats.SUM, cw.Unit.COUNT),
+            this.esMetric('3xx', '3xx', cw.Stats.SUM, cw.Unit.COUNT),
+            this.esMetric('4xx', '4xx', cw.Stats.SUM, cw.Unit.COUNT),
+            this.esMetric('5xx', '5xx', cw.Stats.SUM, cw.Unit.COUNT),
         ]),
         this.databaseWidget('Data Replication Delay', [
             this.createGraphMetric({
                 metricName: 'QLDBReplicationDelay',
                 namespace: 'AGS/EvidenceStore',
                 unit: cw.Unit.MILLISECONDS,
-                statistic: cw.Statistic.AVERAGE,
+                statistic: cw.Stats.AVERAGE,
             }),
         ]),
         this.databaseWidget('Indexed evidences', [
             this.esMetric(
                 'Evidences',
                 'SearchableDocuments',
-                cw.Statistic.AVERAGE,
+                cw.Stats.AVERAGE,
                 cw.Unit.COUNT
             ),
         ]),
@@ -117,7 +117,7 @@ export class EvidenceStoreDatabaseDashboard {
     private esMetric(
         label: string,
         metricName: string,
-        statistic: cw.Statistic,
+        statistic: string,
         unit?: cw.Unit
     ): cw.IMetric {
         return this.createGraphMetric({
@@ -133,7 +133,7 @@ export class EvidenceStoreDatabaseDashboard {
     private qldbMetric(
         label: string,
         metricName: string,
-        statistic: cw.Statistic,
+        statistic: string,
         unit?: cw.Unit,
         dimensions?: Record<string, any>
     ) {

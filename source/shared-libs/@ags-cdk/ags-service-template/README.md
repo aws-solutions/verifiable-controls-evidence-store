@@ -36,3 +36,15 @@ new AgsServiceAlarms(this, 'service-alarms-construct', {
         });
 
 ```
+
+Python lambda template, default python version 3.9
+```
+import { PythonLambda } from "@ags-cdk/ags-service-template";
+...
+     new PythonLambda(this, "helloworld", {
+      sourceCodePath: path.resolve(__dirname, "../lambda"),
+      handler: "src.hello_world.app.handler",
+      functionName: "hello",
+    });
+
+```

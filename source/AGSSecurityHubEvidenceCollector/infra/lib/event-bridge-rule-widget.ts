@@ -29,7 +29,7 @@ export function createEventBridgeRuleWidget(ruleName: string): cw.IWidget {
                 namespace: 'AWS/Events',
                 metricName: 'Invocations',
                 label: 'Total Invocations',
-                statistic: cw.Statistic.SUM,
+                statistic: cw.Stats.SUM,
                 unit: cw.Unit.COUNT,
                 dimensionsMap: {
                     RuleName: ruleName,
@@ -39,7 +39,7 @@ export function createEventBridgeRuleWidget(ruleName: string): cw.IWidget {
                 namespace: 'AWS/Events',
                 metricName: 'FailedInvocations',
                 label: 'Total Failed Invocations',
-                statistic: cw.Statistic.SUM,
+                statistic: cw.Stats.SUM,
                 unit: cw.Unit.COUNT,
                 dimensionsMap: {
                     RuleName: ruleName,

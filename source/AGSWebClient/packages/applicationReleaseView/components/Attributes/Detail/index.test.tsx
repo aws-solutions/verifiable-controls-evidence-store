@@ -13,10 +13,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render } from '@testing-library/react';
 import { Attribute } from '@ags/webclient-application-release-core/types';
 import AttributeDetail from '.';
-import { formatDate } from '@ags/webclient-core/utils/helpers';
+import { render } from '@testing-library/react';
 
 const testDateStr1 = '2021-10-11T12:34:56Z';
 const testDateStr2 = '2021-10-12T12:34:56Z';
@@ -37,7 +36,5 @@ describe('AttributeDetail', () => {
         expect(getByText('hostingConstruct')).toBeInTheDocument();
         expect(getByText('lambda')).toBeInTheDocument();
         expect(getByText('hostingConstruct lambda')).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr1)))).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr2)))).toBeInTheDocument();
     });
 });

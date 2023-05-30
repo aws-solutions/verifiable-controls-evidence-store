@@ -15,14 +15,16 @@
 */
 import * as aws from 'aws-sdk';
 import { AppConfiguration } from 'src/common/configuration/AppConfiguration';
-import { computeHash } from 'src/services/CryptoHelper';
+import { base64ToBase64Url, computeHash } from 'src/services/CryptoHelper';
 import { constructObjectUrl } from 'src/services/S3UrlHelper';
 import { inject, injectable } from 'tsyringe';
 import { EvidenceContentData } from './schemas/EvidenceContentData';
+import AGSError from 'src/common/AGSError';
 
 @injectable()
 export class EvidenceContentRepository {
     private readonly bucketName: string;
+
     constructor(
         @inject('S3') private s3: aws.S3,
         @inject('AppConfiguration') appConfig: AppConfiguration
@@ -63,6 +65,53 @@ export class EvidenceContentRepository {
             Key: this.computeObjectKey(content),
         };
         await this.s3.deleteObject(request).promise();
+    }
+
+    async getObjectAttributes(
+        bucketName: string,
+        objectKey: string
+    ): Promise<{ objectHash: string; objectSize?: number } | undefined> {
+        let objectSize = 0;
+        //try {
+        // get object attributes
+        const attributes = await this.s3
+            .getObjectAttributes({
+                Bucket: bucketName,
+                Key: objectKey,
+                ObjectAttributes: ['Checksum', 'ObjectSize'],
+            })
+            .promise();
+
+        if (attributes.Checksum && attributes.Checksum.ChecksumSHA256) {
+            return {
+                objectHash: base64ToBase64Url(attributes.Checksum.ChecksumSHA256),
+                objectSize: attributes.ObjectSize,
+            };
+        }
+
+        objectSize = attributes.ObjectSize ?? 0;
+
+        if (objectSize === 0 || objectSize > 104857600) {
+            // default 100MB
+            throw new AGSError(
+                `object ${bucketName}/${objectKey} is larger than the allowed 100MB`,
+                400
+            );
+        }
+
+        const attachmentContent = await this.getEvidenceContent(bucketName, objectKey);
+
+        if (!attachmentContent) {
+            throw new AGSError(
+                `Unable to download attachment with objectKey ${objectKey}, the object appears to be empty`,
+                400
+            );
+        }
+
+        return {
+            objectHash: computeHash(attachmentContent, 'base64url'),
+            objectSize: objectSize,
+        };
     }
 
     generateSignedUrl(bucketName: string, objectKey: string): string {

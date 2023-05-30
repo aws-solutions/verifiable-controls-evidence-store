@@ -69,7 +69,7 @@ export class AGSService extends Construct {
      *
      * @returns the current configuration
      */
-    getCurrentConfig(): Record<string, string> | undefined {
+    getCurrentConfig(): Record<string, any> | undefined {
         return this.configuration;
     }
 

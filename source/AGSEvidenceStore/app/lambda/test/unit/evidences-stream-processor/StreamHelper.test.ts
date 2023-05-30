@@ -20,7 +20,7 @@ import { StreamHelper } from 'evidences-stream-processor/StreamHelper';
 
 const helper = new StreamHelper();
 
-describe.skip('deaggregateRecord tests', () => {
+describe('deaggregateRecord tests', () => {
     test('can deaggregate kinesis record into user record', async () => {
         // arrange
         const record: lambda.KinesisStreamRecord = {
@@ -51,7 +51,7 @@ describe.skip('deaggregateRecord tests', () => {
     });
 });
 
-describe.skip('filterRecords tests', () => {
+describe('filterRecords tests', () => {
     test('can filter revision details records', () => {
         // arrange
         const userRecords = [
@@ -66,7 +66,7 @@ describe.skip('filterRecords tests', () => {
         // act
         const filteredRecords = helper.filterRecords<EvidenceData>(
             userRecords,
-            'evidences'
+            'attestations'
         );
 
         // assert
@@ -94,7 +94,7 @@ describe.skip('filterRecords tests', () => {
         // act
         const filteredRecords = helper.filterRecords<EvidenceData>(
             userRecords,
-            'evidences'
+            'attestations'
         );
 
         // assert

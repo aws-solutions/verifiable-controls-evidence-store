@@ -14,16 +14,16 @@
   limitations under the License.
 */
 import { SQSEvent } from 'aws-lambda';
-import { lambdaHandler } from 'src/App';
-import { httpPostFn } from 'test/__mocks__/@apjsb-serverless-lib/apjsb-aws-httpclient';
-import { getResourcesResponse } from 'test/__mocks__/@aws-sdk/client-resource-groups-tagging-api';
-import { getSecretsResponse } from 'test/__mocks__/@aws-sdk/client-secrets-manager';
-import { getParameterResponse } from 'test/__mocks__/@aws-sdk/client-ssm';
-import { putObjectResponse } from 'test/__mocks__/@aws-sdk/client-s3';
-import { assumeRoleResponse } from 'test/__mocks__/@aws-sdk/client-sts';
+import { SSMParameterClient } from 'src/clients/SSMParameterClient';
 import { SecretsManagerClient } from 'src/clients/SecretManagerClient';
 import { SecurityHubEventProcessor } from 'src/SecurityHubEventProcessor';
-import { SSMParameterClient } from 'src/clients/SSMParameterClient';
+import { assumeRoleResponse } from 'test/__mocks__/@aws-sdk/client-sts';
+import { getParameterResponse } from 'test/__mocks__/@aws-sdk/client-ssm';
+import { getResourcesResponse } from 'test/__mocks__/@aws-sdk/client-resource-groups-tagging-api';
+import { getSecretsResponse } from 'test/__mocks__/@aws-sdk/client-secrets-manager';
+import { httpPostFn } from 'test/__mocks__/@apjsb-serverless-lib/apjsb-aws-httpclient';
+import { lambdaHandler } from 'src/App';
+import { putObjectResponse } from 'test/__mocks__/@aws-sdk/client-s3';
 
 describe('Lambda handler tests with security hub finding events', () => {
     beforeEach(() => {
@@ -184,11 +184,11 @@ function generateSecurityHubEvent(productArn?: string): SQSEvent {
                 },
                 body: JSON.stringify({
                     'detail-type': 'Security Hub Finding',
-                    account: '1234',
+                    account: '111122223333',
                     detail: {
                         findings: [
                             {
-                                AwsAccountId: '1234',
+                                AwsAccountId: '111122223333',
                                 CreatedAt: new Date().toISOString(),
                                 Description: 'Test finding',
                                 GeneratorId: '1234',
@@ -220,7 +220,7 @@ function generateSecurityHubEvent(productArn?: string): SQSEvent {
                 md5OfBody: 'bb748b2498bf2ab91aca68cfe4cfb877',
                 eventSource: 'aws:sqs',
                 eventSourceARN:
-                    'arn:aws:sqs:ap-southeast-2:12312312:AGSSecurityHubEvidenceCollector-EvidenceCollectorRateLimitQueue.fifo',
+                    'arn:aws:sqs:ap-southeast-2:111122223333:AGSSecurityHubEvidenceCollector-EvidenceCollectorRateLimitQueue.fifo',
                 awsRegion: 'ap-southeast-2',
             },
         ],

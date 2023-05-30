@@ -54,7 +54,7 @@ describe('config event processor tests', () => {
 
     test('can process config finding', async () => {
         mockGetArn.mockResolvedValueOnce(
-            'arn:aws:lambda:ap-southeast-2:12345678:function:my-function'
+            'arn:aws:lambda:ap-southeast-2:111122223333:function:my-function'
         );
         mockGetTags.mockResolvedValueOnce([
             { Tags: [{ Key: 'AGSAppName', Value: '1234' }] },
@@ -86,11 +86,11 @@ const sampleMessage = {
     detail: {
         resourceId: 'AGSOpsGovService-AGSOpsGovServiceopsGovListenerLam-Om0IBWoMkmwc',
         awsRegion: 'ap-southeast-2',
-        awsAccountId: '116652378265',
+        awsAccountId: '111122223333',
         configRuleName: 'Canary-Rule',
         recordVersion: '1.0',
         configRuleARN:
-            'arn:aws:config:ap-southeast-2:${awsaccount}:config-rule/config-rule-canary',
+            'arn:aws:config:ap-southeast-2:111122223333:config-rule/config-rule-canary',
         messageType: 'ComplianceChangeNotification',
         newEvaluationResult: {
             evaluationResultIdentifier: {
@@ -98,7 +98,7 @@ const sampleMessage = {
                     configRuleName: 'Canary-Rule',
                     resourceType: 'AWS::Lambda::Function',
                     resourceId:
-                        'arn:aws:cloudformation:ap-southeast-2:${awsaccount}:stack/runtimeStack',
+                        'arn:aws:cloudformation:ap-southeast-2:111122223333:stack/runtimeStack',
                 },
                 orderingTimestamp: '2021-07-12T08:24:29.049Z',
             },

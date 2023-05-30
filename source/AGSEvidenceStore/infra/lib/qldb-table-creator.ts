@@ -16,13 +16,14 @@
 
 import * as cdk from 'aws-cdk-lib';
 import * as cr from 'aws-cdk-lib/custom-resources';
+import * as ddb from 'aws-cdk-lib/aws-dynamodb';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as path from 'path';
-import * as ddb from 'aws-cdk-lib/aws-dynamodb';
-import { v4 as uuid } from 'uuid';
+
 import { Construct } from 'constructs';
+import { v4 as uuid } from 'uuid';
 
 export interface QldbTableCreatorCustomResourceProps {
     ledgerName: string;
@@ -81,7 +82,7 @@ class QldbTableCreator extends Construct {
         const fn = new lambda.SingletonFunction(this, 'qldb-table-creator-fn', {
             uuid: 'qldb-table-creator-provider',
             handler: 'index.onEvent',
-            runtime: lambda.Runtime.NODEJS_12_X,
+            runtime: lambda.Runtime.NODEJS_18_X,
             code: lambda.Code.fromAsset(
                 path.join(__dirname, './qldb-table-creator/dist')
             ),

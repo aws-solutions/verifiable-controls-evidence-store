@@ -18,12 +18,14 @@ import {
     AGSService,
     AgsServiceDashboard,
     AGSServiceProps,
+    SubnetGroup,
 } from '@ags-cdk/ags-service-template';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as targets from 'aws-cdk-lib/aws-events-targets';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as secrets from 'aws-cdk-lib/aws-secretsmanager';
 import * as ssm from 'aws-cdk-lib/aws-ssm';
+import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as cdk from 'aws-cdk-lib';
 import * as path from 'path';
 import * as iam from 'aws-cdk-lib/aws-iam';
@@ -35,9 +37,9 @@ import * as synthetics from '@aws-cdk/aws-synthetics-alpha';
 import { EvidenceStoreOnboarder } from './evidence-store-onboarder';
 import { createEventBridgeRuleWidget } from './event-bridge-rule-widget';
 import { SqsEventSource } from 'aws-cdk-lib/aws-lambda-event-sources';
-import { AGSSyntheticsCanary } from '@ags-cdk/ags-synthetics-canary';
 import { SolutionMetricsCollectorConstruct } from '@ags-cdk/ags-solution-metrics';
 import { Construct } from 'constructs';
+import { SyntheticsCanary } from './synthetics-canary';
 
 export const SchemaId = 'sec-hub-evidence';
 
@@ -90,6 +92,7 @@ export class SecurityHubEvidenceCollectorService extends AGSService {
             evidenceProviderId: ProviderId,
             evidenceStoreApi: evidenceStoreApi.stringValue,
             schemaId: SchemaId,
+            sharedInfraClient: this.sharedInfraClient,
         });
 
         onboarder.node.addDependency(apiKeySecret, evidenceStoreApi);
@@ -139,7 +142,7 @@ export class SecurityHubEvidenceCollectorService extends AGSService {
         const agsLambda = new AGSLambdaFunction(this, lambdaName, {
             description: 'Evidence Collector for Security Hub and Config',
             service: this,
-            runtime: lambda.Runtime.NODEJS_14_X,
+            runtime: lambda.Runtime.NODEJS_18_X,
             handler: 'app.lambdaHandler',
             iamRoleName: 'SecurityHubEvidenceCollectorRole',
             code: lambda.Code.fromAsset(
@@ -281,9 +284,31 @@ export class SecurityHubEvidenceCollectorService extends AGSService {
 
         const canaryName = 'shec-canary';
 
-        const canary = new AGSSyntheticsCanary(this, 'canary', {
+        const vpcConfig =
+            this.sharedInfraClient.deploymentOptions.apiGatewayType === 'private'
+                ? {
+                      vpcId: this.sharedInfraClient.vpc.vpcId,
+                      subnetIds: this.sharedInfraClient.vpc.selectSubnets(
+                          this.sharedInfraClient.getSubnetsByGroupName(
+                              SubnetGroup.SERVICE
+                          )
+                      ).subnetIds,
+                      securityGroupIds: this.sharedInfraClient
+                          .getSubnetSecurityGroups(SubnetGroup.SERVICE)
+                          ?.map((securityGroup) => securityGroup.securityGroupId) || [
+                          new ec2.SecurityGroup(this, 'canarySecurityGroup', {
+                              vpc: this.sharedInfraClient.vpc,
+                          }).securityGroupId,
+                      ],
+                  }
+                : {
+                      subnetIds: [],
+                      securityGroupIds: [],
+                  };
+
+        const canary = new SyntheticsCanary(this, 'canary', {
             canaryName,
-            runtime: synthetics.Runtime.SYNTHETICS_NODEJS_PUPPETEER_3_1,
+            runtime: synthetics.Runtime.SYNTHETICS_NODEJS_PUPPETEER_3_8,
             sharedInfraClient: this.sharedInfraClient,
             schedule: synthetics.Schedule.expression('rate(5 minutes)'),
             test: synthetics.Test.custom({
@@ -301,6 +326,7 @@ export class SecurityHubEvidenceCollectorService extends AGSService {
             s3BucketEncryptionKeyArn: this.kmsKeys.syntheticsCanaryLogBucket.keyArn,
             failureLogRetentionPeriod: 7,
             successLogRetentionPeriod: 1,
+            vpcConfig,
         });
 
         // grant access to the canary to read params from ssm
@@ -324,7 +350,7 @@ export class SecurityHubEvidenceCollectorService extends AGSService {
             metricName: 'ApproximateNumberOfMessagesVisible',
             dimensionsMap: { QueueName: deadLetterQueue.queueName },
             period: cdk.Duration.minutes(1),
-            statistic: cw.Statistic.MINIMUM,
+            statistic: cw.Stats.MINIMUM,
             unit: cw.Unit.COUNT,
             label: 'EvidenceCollectorDLQLength',
         });
@@ -335,7 +361,7 @@ export class SecurityHubEvidenceCollectorService extends AGSService {
             metricName: 'ApproximateNumberOfMessagesVisible',
             dimensionsMap: { QueueName: evidenceCollectorRateLimitQueue.queueName },
             period: cdk.Duration.minutes(1),
-            statistic: cw.Statistic.MINIMUM,
+            statistic: cw.Stats.MINIMUM,
             unit: cw.Unit.COUNT,
             label: 'EvidenceCollectorRateLimitQueueLength',
         });
@@ -387,7 +413,7 @@ export class SecurityHubEvidenceCollectorService extends AGSService {
         new SolutionMetricsCollectorConstruct(this, 'solution-metrics-collector', {
             solutionId,
             solutionDisplayName: 'AWS Verifiable Control Evidence Store',
-            sendAnonymousMetric:
+            sendAnonymousMetrics:
                 this.getCurrentConfig()?.publishOperationalMetrics === 'N' ? 'No' : 'Yes',
             version: solutionVersion,
             metricsData: {

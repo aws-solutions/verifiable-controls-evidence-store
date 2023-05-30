@@ -17,6 +17,7 @@ import { inject, injectable } from 'tsyringe';
 import * as aws from 'aws-sdk';
 import { AppConfiguration } from 'src/common/configuration/AppConfiguration';
 import { EvidenceSchemaData } from './schemas/EvidenceProviderData';
+import { PutItemOutput } from 'aws-sdk/clients/dynamodb';
 
 @injectable()
 export class EvidenceSchemaRepository {
@@ -28,8 +29,8 @@ export class EvidenceSchemaRepository {
         this.tableName = appConfig.evidenceSchemaTableName;
     }
 
-    async createSchema(data: EvidenceSchemaData): Promise<void> {
-        await this.db
+    async createSchema(data: EvidenceSchemaData): Promise<PutItemOutput> {
+        return await this.db
             .put({
                 TableName: this.tableName,
                 Item: data,

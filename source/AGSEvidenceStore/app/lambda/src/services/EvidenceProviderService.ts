@@ -31,17 +31,23 @@ import { ApiKeyRepository } from 'src/data/ApiKeyRepository';
 import { computeHash } from './CryptoHelper';
 import { QueryOutput } from 'src/types/QueryOutput';
 import { SearchEvidenceProviderInput } from 'src/types/SearchEvidenceProviderInput';
+import { Logger, LoggerFactory } from '@apjsb-serverless-lib/logger';
 
 @injectable()
 export class EvidenceProviderService {
+    private readonly logger: Logger;
+
     constructor(
         @inject(EvidenceProviderRepository)
         private repository: EvidenceProviderRepository,
         @inject(EvidenceSchemaRepository)
         private schemaRepo: EvidenceSchemaRepository,
         @inject(ApiKeyRepository)
-        private keyRepo: ApiKeyRepository
-    ) {}
+        private keyRepo: ApiKeyRepository,
+        @inject('LoggerFactory') loggerFactory: LoggerFactory
+    ) {
+        this.logger = loggerFactory.getLogger('EvidenceProviderService');
+    }
 
     async listEvidenceProviders(
         input: SearchEvidenceProviderInput
@@ -65,6 +71,7 @@ export class EvidenceProviderService {
         input: CreateEvidenceProviderInput,
         ttl?: number
     ): Promise<CreateEvidenceProviderOutput> {
+        this.logger.debug(`Creating new provider with input `, { input });
         const providerId = input.providerId ?? uuid();
         const isProviderValid = await this.repository.isValidProvider(
             input.providerId ?? uuid(),
@@ -77,6 +84,8 @@ export class EvidenceProviderService {
             );
         }
         const apiKey = await this.keyRepo.createApiKey(providerId);
+
+        this.logger.debug(`Generated a new api key for provider with id ${providerId}`);
 
         const evidenceProvider: EvidenceProviderData = {
             providerId: providerId,
@@ -94,18 +103,24 @@ export class EvidenceProviderService {
 
         const provider = await this.repository.createEvidenceProvider(evidenceProvider);
 
+        this.logger.debug(`Successfully added new provider to provider table`);
+
         if (input.schemas) {
+            this.logger.debug(`Adding evidence schemas`);
             await Promise.all(
-                input.schemas.map((schema) => {
-                    this.schemaRepo.createSchema({
+                input.schemas.map(async (schema) => {
+                    this.logger.debug(`Adding schema with id ${schema.schemaId}`);
+                    const result = await this.schemaRepo.createSchema({
                         providerId: provider.providerId,
                         content: schema.content,
                         schemaId: schema.schemaId,
                         createdTimestamp: new Date().toISOString(),
                         description: schema.description,
                     });
+                    this.logger.debug(`Add schema result `, { result });
                 })
             );
+            this.logger.debug(`Successfully added ${input.schemas.length} schemas`);
         }
 
         return {

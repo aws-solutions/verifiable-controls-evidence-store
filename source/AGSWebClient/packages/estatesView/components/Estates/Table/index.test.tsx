@@ -13,12 +13,14 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render, fireEvent } from '@testing-library/react';
+import * as appContext from '@ags/webclient-core/containers/AppContext';
+
+import { fireEvent, render } from '@testing-library/react';
+
 import { BrowserRouter } from 'react-router-dom';
+import { EstateDisplay } from '@ags/webclient-estates-core/types';
 import EstatesTable from '.';
 import { UserGroup } from '@ags/webclient-core/types';
-import { EstateDisplay } from '@ags/webclient-estates-core/types';
-import * as appContext from '@ags/webclient-core/containers/AppContext';
 
 jest.mock('@ags/webclient-core/containers/AppContext');
 
@@ -28,12 +30,12 @@ const estates: EstateDisplay[] = [
         name: 'test_estate_1',
         parentBUId: '11',
         parentBUName: '11Name',
-        toolingAccountId: '55555',
+        toolingAccountId: '444455556666',
         environments: [
             {
                 id: '1111',
                 name: 'env1',
-                awsAccountId: '66666',
+                awsAccountId: '555555555555',
                 creationTime: '2021-11-10T23:20:41.747Z',
                 envClasses: ['nonprod'],
                 estateId: 'estateId1',
@@ -50,12 +52,12 @@ const estates: EstateDisplay[] = [
         name: 'test_estate_2',
         parentBUId: '22',
         parentBUName: '22Name',
-        toolingAccountId: '55555B',
+        toolingAccountId: '111122223333',
         environments: [
             {
                 id: '2222',
                 name: 'env2',
-                awsAccountId: '77777',
+                awsAccountId: '555555555555',
                 creationTime: '2021-11-10T23:20:41.747Z',
                 envClasses: ['prod'],
                 estateId: 'estateId2',

@@ -32,24 +32,24 @@ describe('S3UrlHelper tests', () => {
         // act
         const url = constructObjectUrl(
             s3,
-            'my-bucket',
+            'DOC-EXAMPLE-BUCKET',
             'my-object-key/level1/level2/filename'
         );
 
         // assert
         expect(url).toBe(
-            'https://my-bucket.s3.ap-southeast-2.amazonaws.com/my-object-key/level1/level2/filename'
+            'https://DOC-EXAMPLE-BUCKET.s3.ap-southeast-2.amazonaws.com/my-object-key/level1/level2/filename'
         );
     });
 
     test('can parse s3 object url', () => {
         // act
         const [bucketname, objectKey] = parseObjectUrl(
-            'https://my-bucket.s3.amazonaws.com/my-object-key/level1/level2/filename'
+            'https://DOC-EXAMPLE-BUCKET.s3.amazonaws.com/my-object-key/level1/level2/filename'
         );
 
         // assert
-        expect(bucketname).toBe('my-bucket');
+        expect(bucketname).toBe('doc-example-bucket');
         expect(objectKey).toBe('my-object-key/level1/level2/filename');
     });
 

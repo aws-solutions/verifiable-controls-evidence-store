@@ -17,12 +17,13 @@ import 'reflect-metadata';
 
 import { anyString, anything, instance, mock, reset, when } from 'ts-mockito';
 
+import { AWSError } from 'test/TestHelpers';
+import { ApiKeyRepository } from 'src/data/ApiKeyRepository';
 import { EvidenceProviderData } from 'src/data/schemas/EvidenceProviderData';
 import { EvidenceProviderRepository } from 'src/data/EvidenceProviderRepository';
 import { EvidenceProviderService } from 'src/services/EvidenceProviderService';
-import { AWSError } from 'test/TestHelpers';
 import { EvidenceSchemaRepository } from 'src/data/EvidenceSchemaRepository';
-import { ApiKeyRepository } from 'src/data/ApiKeyRepository';
+import { StaticLoggerFactory } from '@apjsb-serverless-lib/logger';
 
 const repo: EvidenceProviderRepository = mock(EvidenceProviderRepository);
 const schemaRepo: EvidenceSchemaRepository = mock(EvidenceSchemaRepository);
@@ -30,7 +31,8 @@ const apiKeyRepo: ApiKeyRepository = mock(ApiKeyRepository);
 const service = new EvidenceProviderService(
     instance(repo),
     instance(schemaRepo),
-    instance(apiKeyRepo)
+    instance(apiKeyRepo),
+    new StaticLoggerFactory()
 );
 const providerData: EvidenceProviderData = {
     providerId: '1234',

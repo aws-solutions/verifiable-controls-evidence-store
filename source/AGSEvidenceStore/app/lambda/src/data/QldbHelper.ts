@@ -74,18 +74,22 @@ export class QldbHelper {
 
     async verifyRevision(evidence: ElasticSearchEvidenceData): Promise<boolean> {
         try {
+            let digest: LedgerDigest = evidence.revisionDetails.digest;
+
+            if (
+                !digest.digestTipAddress ||
+                digest.digestTipAddress.sequenceNo <
+                    evidence.revisionDetails.blockAddress.sequenceNo
+            ) {
+                digest = await this.getDigest();
+            }
+
             const result = await this.qldb
                 .getRevision({
                     Name: this.ledgerName,
                     DocumentId: evidence.revisionDetails.metadata.id,
                     DigestTipAddress: {
-                        IonText: dumpText(
-                            load(
-                                JSON.stringify(
-                                    evidence.revisionDetails.digest.digestTipAddress
-                                )
-                            )
-                        ),
+                        IonText: dumpText(load(JSON.stringify(digest.digestTipAddress))),
                     },
                     BlockAddress: {
                         IonText: dumpText(
@@ -115,7 +119,7 @@ export class QldbHelper {
             });
 
             const verified = this.isEqual(
-                Buffer.from(evidence.revisionDetails.digest.digest, 'base64'),
+                Buffer.from(digest.digest, 'base64'),
                 documentHash
             );
 
@@ -140,6 +144,15 @@ export class QldbHelper {
 
     async verifyBlock(evidence: ElasticSearchEvidenceData): Promise<boolean> {
         try {
+            let digest: LedgerDigest = evidence.revisionDetails.digest;
+
+            if (
+                !digest.digestTipAddress ||
+                digest.digestTipAddress.sequenceNo <
+                    evidence.revisionDetails.blockAddress.sequenceNo
+            ) {
+                digest = await this.getDigest();
+            }
             const result = await this.qldb
                 .getBlock({
                     Name: this.ledgerName,
@@ -149,13 +162,7 @@ export class QldbHelper {
                         ),
                     },
                     DigestTipAddress: {
-                        IonText: dumpText(
-                            load(
-                                JSON.stringify(
-                                    evidence.revisionDetails.digest.digestTipAddress
-                                )
-                            )
-                        ),
+                        IonText: dumpText(load(JSON.stringify(digest.digestTipAddress))),
                     },
                 })
                 .promise();
@@ -171,7 +178,7 @@ export class QldbHelper {
             });
 
             const verified = this.isEqual(
-                Buffer.from(evidence.revisionDetails.digest.digest, 'base64'),
+                Buffer.from(digest.digest, 'base64'),
                 blockHash
             );
 

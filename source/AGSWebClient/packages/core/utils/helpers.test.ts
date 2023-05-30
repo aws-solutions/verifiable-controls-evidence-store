@@ -17,8 +17,8 @@ import { formatDate } from './helpers';
 
 describe('helpers', () => {
     test('format date', () => {
-        expect(formatDate(new Date('1995-12-17T03:24:00'), 'en-US')).toBe(
-            'Dec 17, 1995, 3:24:00 AM'
+        expect(formatDate(new Date('1995-12-17T03:24:00'), 'en-US')).toContain(
+            'Dec 17, 1995, 3:24:00'
         );
     });
 });

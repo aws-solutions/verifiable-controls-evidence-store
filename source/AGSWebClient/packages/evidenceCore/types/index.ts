@@ -41,7 +41,7 @@ export interface Evidence {
     content?: Record<string, unknown>;
     additionalTargetIds?: string[];
     metadata?: Record<string, unknown>;
-    attachments?: { objectKey: string; attachmentId: string }[];
+    attachments?: { objectKey: string; attachmentId: string; size: number }[];
     version?: string;
 }
 
@@ -119,7 +119,7 @@ export interface CreateEvidenceProviderResponse {
 
 export interface FileUploadParams {
     sessionId: string;
-    file: any;
+    file: File;
     userCredential: UserCredential;
 }
 

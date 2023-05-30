@@ -32,7 +32,6 @@ import {
     AGSRestApi,
     AGSService,
     AGSServiceProps,
-    AgsSecureBucket,
 } from '@ags-cdk/ags-service-template';
 
 import { EvidenceStoreApiDefinition } from './evidence-store-api-definition';
@@ -40,9 +39,11 @@ import { QldbReplica } from './qldb-replica';
 import { QldbTableCreatorCustomResource } from './qldb-table-creator';
 import { EvidenceStoreDashboard } from './evidence-store-dashboard';
 import { EvidenceArchiver } from './evidence-archiver';
-import { AGSSyntheticsCanary } from '@ags-cdk/ags-synthetics-canary';
 import { userPermission } from './api-permission';
 import { HttpMethods } from 'aws-cdk-lib/aws-s3';
+import { S3EvidenceCollector } from './s3-evidence-collector';
+import { SecureBucket } from './secure-bucket';
+import { SyntheticsCanary } from './synthetics-canary';
 
 export class EvidenceStore extends AGSService {
     private kmsKeys: Record<string, kms.IKey>;
@@ -59,15 +60,11 @@ export class EvidenceStore extends AGSService {
         const userAgent = `AwsSolution/${solutionId}/${solutionVersion}`;
 
         // The evidence content S3 bucket
-        const evidenceContentBucket = new AgsSecureBucket(
-            this,
-            'evidence-content-bucket',
-            {
-                autoDeleteObjects: this.removalPolicy == cdk.RemovalPolicy.DESTROY,
-                removalPolicy: this.removalPolicy,
-                encryptionKeyArn: this.kmsKeys.evidenceContentBucket.keyArn,
-            }
-        );
+        const evidenceContentBucket = new SecureBucket(this, 'evidence-content-bucket', {
+            autoDeleteObjects: this.removalPolicy == cdk.RemovalPolicy.DESTROY,
+            removalPolicy: this.removalPolicy,
+            encryptionKeyArn: this.kmsKeys.evidenceContentBucket.keyArn,
+        });
 
         // The evidence QLDB ledger
         const evidenceLedger = new qldb.CfnLedger(this, `evidence-ledger`, {
@@ -121,7 +118,7 @@ export class EvidenceStore extends AGSService {
         });
 
         // the attachment bucket
-        const attachmentBucket = new AgsSecureBucket(this, 'attachment-bucket', {
+        const attachmentBucket = new SecureBucket(this, 'attachment-bucket', {
             autoDeleteObjects: this.removalPolicy == cdk.RemovalPolicy.DESTROY,
             removalPolicy: this.removalPolicy,
             encryptionKeyArn: this.kmsKeys.evidenceAttachmentBucket.keyArn,
@@ -182,7 +179,7 @@ export class EvidenceStore extends AGSService {
             environmentEncryption: this.kmsKeys.mainLambda,
             iamRoleName: evidenceLambdaRoleName,
             service: this,
-            runtime: lambda.Runtime.NODEJS_14_X,
+            runtime: lambda.Runtime.NODEJS_18_X,
             handler: 'app.lambdaHandler',
             code: lambda.Code.fromAsset(
                 path.resolve(__dirname, `../../app/lambda/.aws-sam/build/${lambdaName}`)
@@ -218,7 +215,7 @@ export class EvidenceStore extends AGSService {
             description: 'AGS Evidence Store Lambda',
             timeout: cdk.Duration.seconds(30),
             architecture: lambda.Architecture.ARM_64,
-            memorySize: 1024,
+            memorySize: 256,
         });
 
         replica.readReplica.grantRead(agsLambda.lambdaFunction);
@@ -292,9 +289,9 @@ export class EvidenceStore extends AGSService {
 
         const canaryName = 'evidence-store-canary';
 
-        new AGSSyntheticsCanary(this, 'canary', {
+        new SyntheticsCanary(this, 'canary', {
             canaryName,
-            runtime: synthetics.Runtime.SYNTHETICS_NODEJS_PUPPETEER_3_5,
+            runtime: synthetics.Runtime.SYNTHETICS_NODEJS_PUPPETEER_3_8,
             sharedInfraClient: this.sharedInfraClient,
             schedule: synthetics.Schedule.expression('rate(5 minutes)'),
             test: synthetics.Test.custom({
@@ -341,7 +338,7 @@ export class EvidenceStore extends AGSService {
         new SolutionMetricsCollectorConstruct(this, 'solution-metrics-collector', {
             solutionId,
             solutionDisplayName: 'Verifiable Controls Evidence Store',
-            sendAnonymousMetric: this.getCurrentConfig()?.publishOperationalMetrics
+            sendAnonymousMetrics: this.getCurrentConfig()?.publishOperationalMetrics
                 ? 'Yes'
                 : 'No',
             version: solutionVersion,
@@ -357,6 +354,19 @@ export class EvidenceStore extends AGSService {
                 dataRemovalPolicy: this.removalPolicy,
             },
         });
+
+        if (this.configuration?.sourceBuckets) {
+            // s3 collector
+            const s3Collector = new S3EvidenceCollector(this, 's3-collector', {
+                service: this,
+                attachmentBucket: attachmentBucket.bucket,
+                sourceBuckets: this.configuration?.sourceBuckets as any,
+                evidenceStoreApi: evidenceApi,
+                removalPolicy: this.removalPolicy,
+            });
+
+            s3Collector.node.addDependency(agsLambda);
+        }
     }
 
     private setupCMKs() {

@@ -14,18 +14,18 @@
   limitations under the License.
 */
 
-import * as cdk from 'aws-cdk-lib';
-import * as lambda from 'aws-cdk-lib/aws-lambda';
-import * as iam from 'aws-cdk-lib/aws-iam';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
+import * as cdk from 'aws-cdk-lib';
+import * as iam from 'aws-cdk-lib/aws-iam';
 import * as kms from 'aws-cdk-lib/aws-kms';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as logs from 'aws-cdk-lib/aws-logs';
-
-import { IdentityProviderInfo } from './ags-types';
 import * as path from 'path';
+
 import { Construct } from 'constructs';
-import { kmsLogGroupPolicyStatement } from './kms-loggroup-policy';
+import { IdentityProviderInfo } from './ags-types';
 import { addCfnNagSuppression } from './cfn-nag-suppression';
+import { kmsLogGroupPolicyStatement } from './kms-loggroup-policy';
 
 export type AGSTokenServiceProps = {
     authType: string;
@@ -55,7 +55,7 @@ export class AGSTokenService extends Construct {
         const assetCode = lambda.Code.fromAsset(lambdaCodePath);
 
         const acsLambda = new lambda.Function(this, 'ACSLambda', {
-            runtime: lambda.Runtime.NODEJS_12_X,
+            runtime: lambda.Runtime.NODEJS_18_X,
             handler: handlerName,
             code: assetCode,
             environment: {

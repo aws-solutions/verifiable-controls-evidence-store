@@ -13,10 +13,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render } from '@testing-library/react';
-import EnvironmentsTable from '.';
 import { BrowserRouter } from 'react-router-dom';
 import { Environment } from '@ags/webclient-estates-core/types';
+import EnvironmentsTable from '.';
+import { render } from '@testing-library/react';
 
 const environments: Environment[] = [
     {
@@ -25,7 +25,7 @@ const environments: Environment[] = [
         estateId: 'estateId1',
         envClasses: ['nonprod'],
         mandatory: true,
-        awsAccountId: '11112222',
+        awsAccountId: '111122223333',
         creationTime: '2021-11-10T23:20:41.747Z',
         lastUpdatedTime: '2021-11-10T23:20:41.747Z',
         isManualApprovalRequired: false,
@@ -36,7 +36,7 @@ const environments: Environment[] = [
         estateId: 'estateId1',
         envClasses: ['prod'],
         mandatory: false,
-        awsAccountId: '11113333',
+        awsAccountId: '555555555555',
         creationTime: '2021-11-10T23:20:41.747Z',
         lastUpdatedTime: '2021-11-10T23:20:41.747Z',
         isManualApprovalRequired: false,

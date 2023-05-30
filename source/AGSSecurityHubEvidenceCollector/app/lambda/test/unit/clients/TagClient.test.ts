@@ -14,17 +14,17 @@
   limitations under the License.
 */
 import { SecurityHubFinding } from 'src/SecurityHubEvent';
-import { getResourcesTags } from 'src/clients/TagClient';
-import { getResourcesResponse } from 'test/__mocks__/@aws-sdk/client-resource-groups-tagging-api';
 import { assumeRoleResponse } from 'test/__mocks__/@aws-sdk/client-sts';
+import { getResourcesResponse } from 'test/__mocks__/@aws-sdk/client-resource-groups-tagging-api';
+import { getResourcesTags } from 'src/clients/TagClient';
 
 const mockFinding: SecurityHubFinding = {
-    AwsAccountId: '1234',
+    AwsAccountId: '111122223333',
     CreatedAt: new Date().toISOString(),
     Description: 'my test finding',
     GeneratorId: '1234',
     Id: '1234',
-    ProductArn: '1234',
+    ProductArn: 'arn:aws:cloudfront::111122223333:distribution/E1WG1ZNPRXT0D4',
     Resources: [],
     SchemaVersion: '1.0',
     Severity: { Label: 'INFORMATIONAL', Original: 'info' },
@@ -56,7 +56,7 @@ describe('Tag client tests', () => {
         getResourcesResponse.mockResolvedValueOnce({
             ResourceTagMappingList: [
                 {
-                    ResourceARN: 'arn:aws:events:ap-southeast-2:132132131',
+                    ResourceARN: 'arn:aws:events:ap-southeast-2:111122223333',
                     Tags: [{ Key: 'my-key', Value: 'my-value' }],
                 },
             ],
@@ -73,7 +73,7 @@ describe('Tag client tests', () => {
         const results = await getResourcesTags({
             ...mockFinding,
             Resources: [
-                { Id: 'arn:aws:events:ap-southeast-2:132132131', Type: 'resource' },
+                { Id: 'arn:aws:events:ap-southeast-2:111122223333', Type: 'resource' },
             ],
         });
         console.log(results);
@@ -85,7 +85,7 @@ describe('Tag client tests', () => {
         getResourcesResponse.mockResolvedValueOnce({
             ResourceTagMappingList: [
                 {
-                    ResourceARN: 'arn:aws:events:ap-southeast-2:132132131',
+                    ResourceARN: 'arn:aws:events:ap-southeast-2:111122223333',
                     Tags: [{ Key: 'key132', Value: 'value132' }],
                 },
             ],
@@ -101,18 +101,18 @@ describe('Tag client tests', () => {
         const results = await getResourcesTags({
             ...mockFinding,
             Resources: [
-                { Id: 'arn:aws:events:ap-southeast-2:050505050', Type: 'resource' },
-                { Id: 'arn:aws:events:ap-southeast-2:132132131', Type: 'resource' },
+                { Id: 'arn:aws:events:ap-southeast-2:555555555555', Type: 'resource' },
+                { Id: 'arn:aws:events:ap-southeast-2:111122223333', Type: 'resource' },
             ],
         });
 
         expect(results.Resources[0]?.Id).toStrictEqual(
-            'arn:aws:events:ap-southeast-2:050505050'
+            'arn:aws:events:ap-southeast-2:555555555555'
         );
         expect(JSON.stringify(results.Resources[0]?.Tags)).toBeUndefined();
 
         expect(results.Resources[1]?.Id).toStrictEqual(
-            'arn:aws:events:ap-southeast-2:132132131'
+            'arn:aws:events:ap-southeast-2:111122223333'
         );
         expect(JSON.stringify(results.Resources[1]?.Tags)).toStrictEqual(
             JSON.stringify({ key132: 'value132' })
@@ -132,7 +132,7 @@ describe('Tag client tests', () => {
         const results = await getResourcesTags({
             ...mockFinding,
             Resources: [
-                { Id: 'arn:aws:events:ap-southeast-2:132132131', Type: 'resource' },
+                { Id: 'arn:aws:events:ap-southeast-2:111122223333', Type: 'resource' },
             ],
         });
 
@@ -153,14 +153,14 @@ describe('Tag client tests', () => {
         const result = await getResourcesTags({
             ...mockFinding,
             Resources: [
-                { Id: 'arn:aws:events:ap-southeast-2:132132131', Type: 'resource' },
+                { Id: 'arn:aws:events:ap-southeast-2:111122223333', Type: 'resource' },
             ],
         });
 
         expect(result).toMatchObject({
             ...mockFinding,
             Resources: [
-                { Id: 'arn:aws:events:ap-southeast-2:132132131', Type: 'resource' },
+                { Id: 'arn:aws:events:ap-southeast-2:111122223333', Type: 'resource' },
             ],
         });
     });
@@ -169,7 +169,7 @@ describe('Tag client tests', () => {
         getResourcesResponse.mockResolvedValueOnce({
             ResourceTagMappingList: [
                 {
-                    ResourceARN: 'arn:aws:events:ap-southeast-2:132132131',
+                    ResourceARN: 'arn:aws:events:ap-southeast-2:111122223333',
                     Tags: [{ Key: 'my-key', Value: 'my-value' }],
                 },
             ],
@@ -178,14 +178,14 @@ describe('Tag client tests', () => {
         const result = await getResourcesTags({
             ...mockFinding,
             Resources: [
-                { Id: 'arn:aws:events:ap-southeast-2:132132131', Type: 'resource' },
+                { Id: 'arn:aws:events:ap-southeast-2:111122223333', Type: 'resource' },
             ],
         });
 
         expect(result).toMatchObject({
             ...mockFinding,
             Resources: [
-                { Id: 'arn:aws:events:ap-southeast-2:132132131', Type: 'resource' },
+                { Id: 'arn:aws:events:ap-southeast-2:111122223333', Type: 'resource' },
             ],
         });
     });

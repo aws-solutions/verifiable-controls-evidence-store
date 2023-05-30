@@ -52,7 +52,6 @@ module.exports = {
         ],
     },
     externals: {
-        'aws-sdk': 'aws-sdk',
         SyntheticsLogger: 'SyntheticsLogger',
         Synthetics: 'Synthetics',
     },

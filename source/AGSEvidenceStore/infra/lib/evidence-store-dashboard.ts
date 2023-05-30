@@ -13,11 +13,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import * as cdk from 'aws-cdk-lib';
-import { EvidenceStoreDatabaseDashboard } from './evidence-store-database-dashboard';
 import * as ags from '@ags-cdk/ags-service-template';
+import * as cdk from 'aws-cdk-lib';
 import * as cw from 'aws-cdk-lib/aws-cloudwatch';
+
 import { Construct } from 'constructs';
+import { EvidenceStoreDatabaseDashboard } from './evidence-store-database-dashboard';
+
 export interface EvidenceStoreDashboardProps {
     serviceName: string;
     apiName: string;
@@ -113,7 +115,7 @@ export class EvidenceStoreDashboard extends Construct {
                             metricName: 'ApproximateNumberOfMessagesVisible',
                             dimensionsMap: { QueueName: props.streamProcessorDlqName },
                             period: cdk.Duration.minutes(1),
-                            statistic: cw.Statistic.MINIMUM,
+                            statistic: cw.Stats.MINIMUM,
                             unit: cw.Unit.COUNT,
                             label: 'EvidenceCollectorDLQLength',
                         }),

@@ -140,12 +140,13 @@ export class AGSApiCanary extends Construct {
             }),
             canaryName: props.canaryName ?? `${id}-cannary`,
             schedule:
-                props.scheduleForCanary ?? synthetics.Schedule.rate(cdk.Duration.minutes(5)),
+                props.scheduleForCanary ??
+                synthetics.Schedule.rate(cdk.Duration.minutes(5)),
             startAfterCreation: true,
-            environmentVariables:{
+            environmentVariables: {
                 TEST_TARGET_API: props.apiUrl,
                 ...props.environmentVariable,
-            }
+            },
         });
     }
 }

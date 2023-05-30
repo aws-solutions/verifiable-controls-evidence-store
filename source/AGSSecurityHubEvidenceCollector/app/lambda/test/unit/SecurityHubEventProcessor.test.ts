@@ -49,7 +49,7 @@ const sampleMessage = {
     detail: {
         findings: [
             {
-                AwsAccountId: '1234',
+                AwsAccountId: '111122223333',
                 CreatedAt: new Date().toISOString(),
                 Description: 'Test finding',
                 GeneratorId: '1234',

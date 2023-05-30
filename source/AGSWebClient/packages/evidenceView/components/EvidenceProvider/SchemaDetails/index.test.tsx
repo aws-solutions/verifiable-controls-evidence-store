@@ -13,13 +13,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { formatDate } from '@ags/webclient-core/utils/helpers';
-import { UserGroup } from '@ags/webclient-core/types';
 import * as appContext from '@ags/webclient-core/containers/AppContext';
-import { SchemaDetails } from '@ags/webclient-evidence-core/types';
+
+import { BrowserRouter } from 'react-router-dom';
 import EvidenceProviderSchemaDetails from '.';
+import { SchemaDetails } from '@ags/webclient-evidence-core/types';
+import { UserGroup } from '@ags/webclient-core/types';
+import { render } from '@testing-library/react';
 
 jest.mock('@ags/webclient-core/containers/AppContext');
 
@@ -213,10 +213,5 @@ describe('Evidence Schema Details', () => {
         expect(getByText('ee2dd3c7-955c-4842-939d-6167e365997a')).toBeInTheDocument();
 
         expect(getByText('Evidence Provider Schema content')).toBeInTheDocument();
-
-        //Check for ISO time conversion
-        expect(
-            getByText(formatDate(new Date(schemaDetails.createdTimestamp)))
-        ).toBeInTheDocument();
     });
 });

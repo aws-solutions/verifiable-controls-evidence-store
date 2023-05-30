@@ -51,8 +51,4 @@ module.exports = {
         ],
     },
     plugins: [awsSamPlugin],
-
-    externals: {
-        'aws-sdk': 'aws-sdk',
-    },
 };

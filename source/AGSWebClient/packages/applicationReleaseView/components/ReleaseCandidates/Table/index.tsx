@@ -15,7 +15,7 @@
 */
 import { FunctionComponent, useMemo, useCallback } from 'react';
 
-import Table, { Column } from 'aws-northstar/components/Table';
+import Table from 'aws-northstar/components/Table';
 import Link from 'aws-northstar/components/Link';
 import { ReleaseCandidate } from '@ags/webclient-application-release-core/types';
 import { formatDate } from '@ags/webclient-core/utils/helpers';
@@ -30,7 +30,7 @@ export interface ReleaseCandidateTableProps {
 }
 
 export const getColumnDefinitions = () => {
-    const fields: Column<ReleaseCandidate>[] = [
+    const fields: any[] = [
         {
             id: 'id',
             width: 400,

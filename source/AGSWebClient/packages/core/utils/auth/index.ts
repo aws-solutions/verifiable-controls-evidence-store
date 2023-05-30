@@ -15,17 +15,19 @@
 */
 import * as AWS from 'aws-sdk';
 import * as queryString from 'query-string';
-import * as saml from 'saml20';
-import jwtDecode, { JwtPayload } from 'jwt-decode';
-import get from 'lodash.get';
+import * as saml from '@boxyhq/saml20';
+
 import {
-    isDevEnv,
     devCredentials,
     devRegion,
-    devUserName,
     devUserGroups,
+    devUserName,
+    isDevEnv,
 } from '../../config/devConst';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
+
 import { AuthSettings } from '../../types';
+import get from 'lodash.get';
 
 interface IdentityProviderInfo {
     type: 'COGNITO' | 'SAML';
@@ -163,7 +165,7 @@ async function doCognitoLogin(auth: AuthSettings) {
 }
 
 /* istanbul ignore next */
-function doSAMLLogin() {
+async function doSAMLLogin() {
     return new Promise((resolve, reject) => {
         const loginInfoStr = window.sessionStorage.getItem('loginInfo') ?? '{}';
         const loginInfo = JSON.parse(loginInfoStr) as SAMLLoginInfo;
@@ -209,7 +211,7 @@ function doSAMLLogin() {
                 'https://aws.amazon.com/SAML/Attributes/PrincipalTag:AGSRoles';
 
             // get temporarily credentials
-            samlCredentials.refresh((err) => {
+            samlCredentials.refresh(async (err) => {
                 // Credentials will be available when this function is called.
                 if (err) {
                     console.log(
@@ -220,26 +222,25 @@ function doSAMLLogin() {
                 } else {
                     console.log('Succeed to get STS credentials');
 
-                    saml.parse(tokenDecoded, (err, profile) => {
-                        const displayName =
-                            profile.claims[displayNameAttributeName] ?? '';
-                        const userGroupsStr =
-                            profile.claims[userGroupAttributeName] ?? '';
+                    await saml.default.parse(tokenDecoded);
 
-                        const userGroups = userGroupsStr.split('/');
-                        const credentials = {
-                            region: loginInfo.region,
-                            roleArn: loginInfo.roleArn,
-                            accessKeyId: samlCredentials.accessKeyId,
-                            secretAccessKey: samlCredentials.secretAccessKey,
-                            sessionToken: samlCredentials.sessionToken,
-                            displayName,
-                            userGroups,
-                            sessionExpiryTime: samlCredentials.expireTime.toISOString(),
-                        };
-                        console.debug(credentials);
-                        resolve(credentials);
-                    });
+                    const profile = await saml.default.parse(tokenDecoded);
+                    const displayName = profile.claims[displayNameAttributeName] ?? '';
+                    const userGroupsStr = profile.claims[userGroupAttributeName] ?? '';
+
+                    const userGroups = userGroupsStr.split('/');
+                    const credentials = {
+                        region: loginInfo.region,
+                        roleArn: loginInfo.roleArn,
+                        accessKeyId: samlCredentials.accessKeyId,
+                        secretAccessKey: samlCredentials.secretAccessKey,
+                        sessionToken: samlCredentials.sessionToken,
+                        displayName,
+                        userGroups,
+                        sessionExpiryTime: samlCredentials.expireTime.toISOString(),
+                    };
+                    console.debug(credentials);
+                    resolve(credentials);
                 }
             });
         } else {

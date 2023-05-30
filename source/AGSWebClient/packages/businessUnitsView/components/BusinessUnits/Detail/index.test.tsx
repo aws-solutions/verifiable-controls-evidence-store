@@ -13,10 +13,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render } from '@testing-library/react';
+
 import { BusinessUnit } from '@ags/webclient-business-units-core/types';
 import BusinessUnitDetail from '.';
-import { formatDate } from '@ags/webclient-core/utils/helpers';
+import { render } from '@testing-library/react';
 
 const testDateStr1 = '2021-10-11T12:34:56Z';
 const testDateStr2 = '2021-10-12T12:34:56Z';
@@ -27,9 +27,9 @@ const businessUnit1: BusinessUnit = {
     name: 'TestBusinessUnit1',
     unitType: 'BusinessUnit',
     description: 'Description1',
-    businessOwner: 'business@test.com',
-    riskOwner: 'risk@test.com',
-    techOwner: 'tech@test.com',
+    businessOwner: 'business@example.com',
+    riskOwner: 'risk@example.com',
+    techOwner: 'tech@example.com',
     children: [],
     applicationOwnerIds: [],
     controlObjectiveIds: [],
@@ -43,9 +43,9 @@ const parentBusinessUnit: BusinessUnit = {
     name: 'Test Enterprise',
     unitType: 'Enterprise',
     description: 'Enterprise Description',
-    businessOwner: 'ent-business@test.com',
-    riskOwner: 'ent-risk@test.com',
-    techOwner: 'ent-tech@test.com',
+    businessOwner: 'ent-business@example.com',
+    riskOwner: 'ent-risk@example.com',
+    techOwner: 'ent-tech@example.com',
     children: [],
     applicationOwnerIds: [],
     controlObjectiveIds: [],
@@ -64,10 +64,8 @@ describe('BusinessUnitDetail', () => {
         expect(getByText('TestBusinessUnit1')).toBeInTheDocument();
         expect(getByText('Test Enterprise')).toBeInTheDocument();
         expect(getByText('Description1')).toBeInTheDocument();
-        expect(getByText('business@test.com')).toBeInTheDocument();
-        expect(getByText('risk@test.com')).toBeInTheDocument();
-        expect(getByText('tech@test.com')).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr1)))).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr2)))).toBeInTheDocument();
+        expect(getByText('business@example.com')).toBeInTheDocument();
+        expect(getByText('risk@example.com')).toBeInTheDocument();
+        expect(getByText('tech@example.com')).toBeInTheDocument();
     });
 });

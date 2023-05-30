@@ -3,7 +3,10 @@
     "version": "1.2.0",
     "description": "AWS Governance Suite Web Client Business Units",
     "private": true,
-    "author": "Amazon Web Services",
+    "author": {
+        "name": "Amazon Web Services",
+        "url": "https://aws.amazon.com/solutions"
+    },
     "license": "Apache-2.0",
     "entry": "index.ts",
     "scripts": {

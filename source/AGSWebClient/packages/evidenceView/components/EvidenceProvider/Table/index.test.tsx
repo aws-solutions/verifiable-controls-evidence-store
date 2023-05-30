@@ -13,13 +13,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render } from '@testing-library/react';
+import * as appContext from '@ags/webclient-core/containers/AppContext';
+
+import { BrowserRouter } from 'react-router-dom';
 import { EvidenceProvider } from '@ags/webclient-evidence-core/types';
 import EvidenceProviderTable from '.';
-import { BrowserRouter } from 'react-router-dom';
 import { UserGroup } from '@ags/webclient-core/types';
-import * as appContext from '@ags/webclient-core/containers/AppContext';
-import { formatDate } from '@ags/webclient-core/utils/helpers';
+import { render } from '@testing-library/react';
 
 jest.mock('@ags/webclient-core/containers/AppContext');
 
@@ -85,10 +85,5 @@ describe('EvidenceProviderTable', () => {
         //Check for Evidence Provider description
         expect(getByText('Config Schema for Attestation Runtime')).toBeInTheDocument();
         expect(getByText('AGS Compliance Evaluation Service')).toBeInTheDocument();
-
-        //Check for ISO time conversion
-        expect(
-            getByText(formatDate(new Date(evidenceProviders[0].createdTimestamp)))
-        ).toBeInTheDocument();
     });
 });

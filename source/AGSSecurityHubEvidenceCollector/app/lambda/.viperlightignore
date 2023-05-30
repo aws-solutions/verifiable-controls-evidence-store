@@ -1,0 +1,8 @@
+.aws-sam
+api.yaml
+src/TagClient.ts:75
+src/TagClient.ts:76
+src/clients/STSClient.ts:37
+src/clients/STSClient.ts:38
+canary/awsSigV4.js
+canary/canaryUtils.ts

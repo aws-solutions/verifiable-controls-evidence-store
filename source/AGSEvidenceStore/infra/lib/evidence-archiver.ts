@@ -14,13 +14,15 @@
   limitations under the License.
 */
 import * as cdk from 'aws-cdk-lib';
-import * as kms from 'aws-cdk-lib/aws-kms';
-import * as qldb from 'aws-cdk-lib/aws-qldb';
-import * as kinesis from 'aws-cdk-lib/aws-kinesis';
 import * as firehose from 'aws-cdk-lib/aws-kinesisfirehose';
 import * as iam from 'aws-cdk-lib/aws-iam';
-import { AgsSecureBucket } from '@ags-cdk/ags-service-template';
+import * as kinesis from 'aws-cdk-lib/aws-kinesis';
+import * as kms from 'aws-cdk-lib/aws-kms';
+import * as qldb from 'aws-cdk-lib/aws-qldb';
+
 import { Construct } from 'constructs';
+import { SecureBucket } from './secure-bucket';
+
 export interface EvidenceArchiverProps {
     evidenceLedgerName: string;
     removalPolicy: cdk.RemovalPolicy;
@@ -32,7 +34,7 @@ export class EvidenceArchiver extends Construct {
     constructor(scope: Construct, id: string, props: EvidenceArchiverProps) {
         super(scope, id);
 
-        const archiveBucket = new AgsSecureBucket(this, 'archive-bucket', {
+        const archiveBucket = new SecureBucket(this, 'archive-bucket', {
             lifecycleRules: [{ expiration: cdk.Duration.days(3) }],
             autoDeleteObjects: props.removalPolicy == cdk.RemovalPolicy.DESTROY,
             removalPolicy: props.removalPolicy,

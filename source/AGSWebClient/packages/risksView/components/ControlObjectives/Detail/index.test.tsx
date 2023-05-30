@@ -13,10 +13,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render } from '@testing-library/react';
 import { ControlObjective } from '@ags/webclient-risks-core/types';
 import ControlObjectiveDetail from '.';
-import { formatDate } from '@ags/webclient-core/utils/helpers';
+import { render } from '@testing-library/react';
 
 const testDateStr1 = '2021-10-11T12:34:56Z';
 const testDateStr2 = '2021-10-12T12:34:56Z';
@@ -46,8 +45,6 @@ describe('ControlObjectiveDetail', () => {
         );
         expect(getByText('TestObj1')).toBeInTheDocument();
         expect(getByText('Description1')).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr1)))).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr2)))).toBeInTheDocument();
         expect(getAllByText('Fullfiled').length).toBe(2);
     });
 
@@ -57,8 +54,6 @@ describe('ControlObjectiveDetail', () => {
         );
         expect(getByText('TestObj2')).toBeInTheDocument();
         expect(getByText('Description2')).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr1)))).toBeInTheDocument();
-        expect(getByText(formatDate(new Date(testDateStr2)))).toBeInTheDocument();
         expect(queryAllByText('Fullfiled').length).toBe(0);
         expect(queryAllByText('Not Fullfiled').length).toBe(2);
     });

@@ -13,13 +13,15 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render, fireEvent } from '@testing-library/react';
-import { BrowserRouter, Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
-import { UserGroup } from '@ags/webclient-core/types';
 import * as appContext from '@ags/webclient-core/containers/AppContext';
+
+import { BrowserRouter, Router } from 'react-router-dom';
+import { fireEvent, render } from '@testing-library/react';
+
 import { BusinessUnit } from '@ags/webclient-business-units-core/types';
 import BusinessUnitTable from '.';
+import { UserGroup } from '@ags/webclient-core/types';
+import { createMemoryHistory } from 'history';
 
 jest.mock('@ags/webclient-core/containers/AppContext');
 
@@ -30,9 +32,9 @@ const businessUnits: BusinessUnit[] = [
         parentId: 'bu-0',
         unitType: 'BusinessUnit',
         description: 'Description Business Unit 1',
-        businessOwner: 'business@test.com',
-        riskOwner: 'risk@test.com',
-        techOwner: 'tech@test.com',
+        businessOwner: 'business@example.com',
+        riskOwner: 'risk@example.com',
+        techOwner: 'tech@example.com',
         children: [],
         applicationOwnerIds: [],
         controlObjectiveIds: [],
@@ -45,9 +47,9 @@ const businessUnits: BusinessUnit[] = [
         parentId: 'bu-0',
         unitType: 'BusinessUnit',
         description: 'Description Business Unit 2',
-        businessOwner: 'business@test.com',
-        riskOwner: 'risk@test.com',
-        techOwner: 'tech@test.com',
+        businessOwner: 'business@example.com',
+        riskOwner: 'risk@example.com',
+        techOwner: 'tech@example.com',
         children: [],
         applicationOwnerIds: [],
         controlObjectiveIds: [],
@@ -60,9 +62,9 @@ const businessUnits: BusinessUnit[] = [
         parentId: 'bu-0',
         unitType: 'BusinessUnit',
         description: 'Description Business Unit 3',
-        businessOwner: 'business@test.com',
-        riskOwner: 'risk@test.com',
-        techOwner: 'tech@test.com',
+        businessOwner: 'business@example.com',
+        riskOwner: 'risk@example.com',
+        techOwner: 'tech@example.com',
         children: [],
         applicationOwnerIds: [],
         controlObjectiveIds: [],

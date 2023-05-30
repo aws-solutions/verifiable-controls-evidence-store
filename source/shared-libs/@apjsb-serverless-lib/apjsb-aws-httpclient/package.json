@@ -1,46 +1,33 @@
 {
-  "_args": [
-    [
-      "@apjsb-serverless-lib/apjsb-aws-httpclient@1.1.0",
-      "/Users/vovan/projects/amazon/ags-evidencestore/app/lambda"
-    ]
-  ],
-  "_from": "@apjsb-serverless-lib/apjsb-aws-httpclient@1.1.0",
-  "_id": "@apjsb-serverless-lib/apjsb-aws-httpclient@1.1.0",
-  "_inBundle": false,
-  "_integrity": "sha512-azuMXBFGReRz3TSeD+mLEkn9iGFN0HjV8joalP7Yaib03j3fQ4gJ+mxDNzk0fg78g0x+WAX2fvVU08qM790Mew==",
-  "_location": "/@apjsb-serverless-lib/apjsb-aws-httpclient",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "version",
-    "registry": true,
-    "raw": "@apjsb-serverless-lib/apjsb-aws-httpclient@1.1.0",
-    "name": "@apjsb-serverless-lib/apjsb-aws-httpclient",
-    "escapedName": "@apjsb-serverless-lib%2fapjsb-aws-httpclient",
-    "scope": "@apjsb-serverless-lib",
-    "rawSpec": "1.1.0",
-    "saveSpec": null,
-    "fetchSpec": "1.1.0"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://apj-solution-builders-044817409007.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/Apjsb-ServerlessLibrary/@apjsb-serverless-lib/apjsb-aws-httpclient/-/apjsb-aws-httpclient-1.1.0.tgz",
-  "_spec": "1.1.0",
-  "_where": "/Users/vovan/projects/amazon/ags-evidencestore/app/lambda",
-  "author": {
-    "name": "Amazon Web Services"
-  },
-  "dependencies": {
-    "@aws-sdk/client-xray": "3.6.1",
-    "@aws-sdk/node-http-handler": "3.6.1",
-    "@aws-sdk/protocol-http": "3.6.1",
-    "@aws-sdk/signature-v4": "3.6.1",
-    "@aws-sdk/types": "3.6.1",
-    "loglevel": "^1.7.1",
-    "source-map-support": "0.5.19"
-  },
+  "name": "@apjsb-serverless-lib/apjsb-aws-httpclient",
+  "version": "1.1.0",
   "description": "A http client to handle request and signing",
+  "keywords": [
+    "http"
+  ],
+  "author": "Amazon Web Services",
+  "license": "Apache-2.0",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "ssh://git.amazon.com/pkg/Apjsb-ServerlessLibrary"
+  },
+  "publishConfig": {
+    "registry": "https://apj-solution-builders-044817409007.d.codeartifact.ap-southeast-2.amazonaws.com/npm/Apjsb-ServerlessLibrary/"
+  },
+  "scripts": {
+    "lint": "eslint --fix --ext .ts .",
+    "build": "tsc --project tsconfig.production.json",
+    "test": "jest -t 'apjsb-aws-httpclient'"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.20",
     "@types/nock": "^11.1.0",
@@ -62,32 +49,14 @@
     "ts-node": "^9.0.0",
     "typescript": "~3.9.7"
   },
-  "directories": {
-    "lib": "lib",
-    "test": "test"
+  "dependencies": {
+    "@aws-sdk/client-xray": "3.6.1",
+    "@aws-sdk/node-http-handler": "3.6.1",
+    "@aws-sdk/protocol-http": "3.6.1",
+    "@aws-sdk/signature-v4": "3.6.1",
+    "@aws-sdk/types": "3.6.1",
+    "loglevel": "^1.7.1",
+    "source-map-support": "0.5.19"
   },
-  "files": [
-    "dist/**/*"
-  ],
-  "gitHead": "9f0b6f1c7abcd79f6da4b4f8bfefdba44b9ae8f5",
-  "keywords": [
-    "http"
-  ],
-  "license": "Apache-2.0",
-  "main": "dist/index.js",
-  "name": "@apjsb-serverless-lib/apjsb-aws-httpclient",
-  "publishConfig": {
-    "registry": "https://apj-solution-builders-044817409007.d.codeartifact.ap-southeast-2.amazonaws.com/npm/Apjsb-ServerlessLibrary/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "ssh://git.amazon.com/pkg/Apjsb-ServerlessLibrary"
-  },
-  "scripts": {
-    "build": "tsc --project tsconfig.production.json",
-    "lint": "eslint --fix --ext .ts .",
-    "test": "jest -t 'apjsb-aws-httpclient'"
-  },
-  "types": "dist/index.d.ts",
-  "version": "1.1.0"
+  "gitHead": "9f0b6f1c7abcd79f6da4b4f8bfefdba44b9ae8f5"
 }

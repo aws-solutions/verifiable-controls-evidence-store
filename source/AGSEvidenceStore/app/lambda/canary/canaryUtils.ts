@@ -44,7 +44,9 @@ export function createRequest<T>(
         hostname,
         port: 443,
         protocols: 'https',
-        headers: headers ? { ...headers, ttl: '5' } : { ttl: '5' },
+        headers: headers
+            ? { ...headers, 'User-Agent': 'Chrome/85.0.4182.0', ttl: '5' }
+            : { 'User-Agent': 'Chrome/85.0.4182.0', ttl: '5' },
         method,
         path,
     };

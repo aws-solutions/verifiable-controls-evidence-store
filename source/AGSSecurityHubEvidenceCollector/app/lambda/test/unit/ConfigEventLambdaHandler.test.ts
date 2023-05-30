@@ -13,18 +13,18 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { SQSEvent } from 'aws-lambda';
-import { lambdaHandler } from 'src/App';
-import { httpPostFn } from 'test/__mocks__/@apjsb-serverless-lib/apjsb-aws-httpclient';
-import { batchGetResourceResponse } from 'test/__mocks__/@aws-sdk/client-config-service';
-import { getResourcesResponse } from 'test/__mocks__/@aws-sdk/client-resource-groups-tagging-api';
-import { putObjectResponse } from 'test/__mocks__/@aws-sdk/client-s3';
-import { getSecretsResponse } from 'test/__mocks__/@aws-sdk/client-secrets-manager';
-import { getParameterResponse } from 'test/__mocks__/@aws-sdk/client-ssm';
-import { assumeRoleResponse } from 'test/__mocks__/@aws-sdk/client-sts';
 import { ConfigEventProcessor } from 'src/ConfigEventProcessor';
+import { SQSEvent } from 'aws-lambda';
 import { SSMParameterClient } from 'src/clients/SSMParameterClient';
 import { SecretsManagerClient } from 'src/clients/SecretManagerClient';
+import { assumeRoleResponse } from 'test/__mocks__/@aws-sdk/client-sts';
+import { batchGetResourceResponse } from 'test/__mocks__/@aws-sdk/client-config-service';
+import { getParameterResponse } from 'test/__mocks__/@aws-sdk/client-ssm';
+import { getResourcesResponse } from 'test/__mocks__/@aws-sdk/client-resource-groups-tagging-api';
+import { getSecretsResponse } from 'test/__mocks__/@aws-sdk/client-secrets-manager';
+import { httpPostFn } from 'test/__mocks__/@apjsb-serverless-lib/apjsb-aws-httpclient';
+import { lambdaHandler } from 'src/App';
+import { putObjectResponse } from 'test/__mocks__/@aws-sdk/client-s3';
 
 describe('Lambda handler tests with config events', () => {
     beforeEach(() => {
@@ -66,7 +66,7 @@ describe('Lambda handler tests with config events', () => {
         batchGetResourceResponse.mockResolvedValueOnce({
             baseConfigurationItems: [
                 {
-                    arn: 'arn:aws:lambda:ap-southeast-2:12345678:function:my-function',
+                    arn: 'arn:aws:lambda:ap-southeast-2:111122223333:function:my-function',
                 },
             ],
         });
@@ -74,7 +74,7 @@ describe('Lambda handler tests with config events', () => {
             ResourceTagMappingList: [
                 {
                     ResourceARN:
-                        'arn:aws:lambda:ap-southeast-2:12345678:function:my-function',
+                        'arn:aws:lambda:ap-southeast-2:111122223333:function:my-function',
                     Tags: [{ Key: 'AGSAppName', Value: 'my-app' }],
                 },
             ],
@@ -99,14 +99,16 @@ describe('Lambda handler tests with config events', () => {
         });
         batchGetResourceResponse.mockResolvedValueOnce({
             baseConfigurationItems: [
-                { arn: 'arn:aws:lambda:ap-southeast-2:12345678:function:my-function' },
+                {
+                    arn: 'arn:aws:lambda:ap-southeast-2:111122223333:function:my-function',
+                },
             ],
         });
         getResourcesResponse.mockResolvedValueOnce({
             ResourceTagMappingList: [
                 {
                     ResourceARN:
-                        'arn:aws:lambda:ap-southeast-2:12345678:function:my-function',
+                        'arn:aws:lambda:ap-southeast-2:111122223333:function:my-function',
                     Tags: [{ Key: 'AGSAppName', Value: 'my-app' }],
                 },
             ],
@@ -128,14 +130,16 @@ describe('Lambda handler tests with config events', () => {
         });
         batchGetResourceResponse.mockResolvedValueOnce({
             baseConfigurationItems: [
-                { arn: 'arn:aws:lambda:ap-southeast-2:12345678:function:my-function' },
+                {
+                    arn: 'arn:aws:lambda:ap-southeast-2:111122223333:function:my-function',
+                },
             ],
         });
         getResourcesResponse.mockResolvedValueOnce({
             ResourceTagMappingList: [
                 {
                     ResourceARN:
-                        'arn:aws:lambda:ap-southeast-2:12345678:function:my-function',
+                        'arn:aws:lambda:ap-southeast-2:111122223333:function:my-function',
                     Tags: [{ Key: 'AGSAppName', Value: 'my-app' }],
                 },
             ],
@@ -190,16 +194,16 @@ function generateConfigEvent(): SQSEvent {
                 },
                 body: JSON.stringify({
                     'detail-type': 'Config Rules Compliance Change',
-                    account: '1234',
+                    account: '111122223333',
                     detail: {
                         resourceId:
                             'AGSOpsGovService-AGSOpsGovServiceopsGovListenerLam-Om0IBWoMkmwc',
                         awsRegion: 'ap-southeast-2',
-                        awsAccountId: '116652378265',
+                        awsAccountId: '111122223333',
                         configRuleName: 'Canary-Rule',
                         recordVersion: '1.0',
                         configRuleARN:
-                            'arn:aws:config:ap-southeast-2:${awsaccount}:config-rule/config-rule-canary',
+                            'arn:aws:config:ap-southeast-2:111122223333:config-rule/config-rule-canary',
                         messageType: 'ComplianceChangeNotification',
                         newEvaluationResult: {
                             evaluationResultIdentifier: {
@@ -207,7 +211,7 @@ function generateConfigEvent(): SQSEvent {
                                     configRuleName: 'Canary-Rule',
                                     resourceType: 'AWS::Lambda::Function',
                                     resourceId:
-                                        'arn:aws:cloudformation:ap-southeast-2:${awsaccount}:stack/runtimeStack',
+                                        'arn:aws:cloudformation:ap-southeast-2:111122223333:stack/runtimeStack',
                                 },
                                 orderingTimestamp: '2021-07-12T08:24:29.049Z',
                             },
@@ -229,7 +233,7 @@ function generateConfigEvent(): SQSEvent {
                 md5OfBody: 'bb748b2498bf2ab91aca68cfe4cfb877',
                 eventSource: 'aws:sqs',
                 eventSourceARN:
-                    'arn:aws:sqs:ap-southeast-2:12312312:AGSSecurityHubEvidenceCollector-EvidenceCollectorRateLimitQueue.fifo',
+                    'arn:aws:sqs:ap-southeast-2:111122223333:AGSSecurityHubEvidenceCollector-EvidenceCollectorRateLimitQueue.fifo',
                 awsRegion: 'ap-southeast-2',
             },
         ],

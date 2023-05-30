@@ -1,75 +1,41 @@
 {
-  "_args": [
-    [
-      "@apjsb-serverless-lib/common-types@1.0.10",
-      "/Users/vovan/projects/amazon/ags-evidencestore/app/lambda"
-    ]
-  ],
-  "_from": "@apjsb-serverless-lib/common-types@1.0.10",
-  "_id": "@apjsb-serverless-lib/common-types@1.0.10",
-  "_inBundle": false,
-  "_integrity": "sha512-zHl9Gk4jf9BOqytNAE+a+kV0xZnDgMQvF1R9woYzbSqQXj/fh6QmFVQ7IXyFsxaaN3cc4ME8FR/Cu3m6Thc7QA==",
-  "_location": "/@apjsb-serverless-lib/common-types",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "version",
-    "registry": true,
-    "raw": "@apjsb-serverless-lib/common-types@1.0.10",
     "name": "@apjsb-serverless-lib/common-types",
-    "escapedName": "@apjsb-serverless-lib%2fcommon-types",
-    "scope": "@apjsb-serverless-lib",
-    "rawSpec": "1.0.10",
-    "saveSpec": null,
-    "fetchSpec": "1.0.10"
-  },
-  "_requiredBy": [
-    "/",
-    "/@apjsb-serverless-lib/lambda-router",
-    "/@apjsb-serverless-lib/logger",
-    "/@apjsb-serverless-lib/response-formatter"
-  ],
-  "_resolved": "https://apj-solution-builders-044817409007.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/Apjsb-ServerlessLibrary/@apjsb-serverless-lib/common-types/-/common-types-1.0.10.tgz",
-  "_spec": "1.0.10",
-  "_where": "/Users/vovan/projects/amazon/ags-evidencestore/app/lambda",
-  "author": {
-    "name": "Amazon Web Services"
-  },
-  "description": "A set of common shared types for other libraries",
-  "devDependencies": {
-    "@types/aws-lambda": "^8.10.72",
-    "@types/jest": "^26.0.20",
-    "@typescript-eslint/eslint-plugin": "^4.13.0",
-    "@typescript-eslint/parser": "^4.13.0",
-    "eslint": "^7.17.0",
-    "eslint-config-prettier": "^7.1.0",
-    "eslint-plugin-header": "^3.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "jest": "^26.6.3",
-    "jest-junit": "^12.0.0",
-    "prettier": "^2.2.1",
-    "source-map-support": "^0.5.19",
-    "ts-jest": "^26.4.4",
-    "typescript": "4.1.5"
-  },
-  "files": [
-    "dist/**/*"
-  ],
-  "gitHead": "449962a5d0cf542235248e98f515dcd51e030114",
-  "license": "Apache-2.0",
-  "main": "dist/lib/index.js",
-  "name": "@apjsb-serverless-lib/common-types",
-  "publishConfig": {
-    "registry": "https://apj-solution-builders-044817409007.d.codeartifact.ap-southeast-2.amazonaws.com/npm/Apjsb-ServerlessLibrary/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "ssh://git.amazon.com/pkg/Apjsb-ServerlessLibrary"
-  },
-  "scripts": {
-    "build": "tsc --project tsconfig.production.json",
-    "lint": "eslint --fix --ext .ts .",
-    "test": "jest --silent"
-  },
-  "types": "dist/lib/index.d.ts",
-  "version": "1.0.10"
+    "version": "1.0.10",
+    "description": "A set of common shared types for other libraries",
+    "main": "dist/lib/index.js",
+    "types": "dist/lib/index.d.ts",
+    "files": [
+        "dist/**/*"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "ssh://git.amazon.com/pkg/Apjsb-ServerlessLibrary"
+    },
+    "publishConfig": {
+        "registry": "https://apj-solution-builders-044817409007.d.codeartifact.ap-southeast-2.amazonaws.com/npm/Apjsb-ServerlessLibrary/"
+    },
+    "scripts": {
+        "lint": "eslint --fix --ext .ts .",
+        "build": "tsc --project tsconfig.production.json",
+        "test": "jest --silent"
+    },
+    "author": "Amazon Web Services",
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "@types/aws-lambda": "^8.10.72",
+        "@types/jest": "^26.0.20",
+        "@typescript-eslint/eslint-plugin": "^4.13.0",
+        "@typescript-eslint/parser": "^4.13.0",
+        "eslint": "^7.17.0",
+        "eslint-config-prettier": "^7.1.0",
+        "eslint-plugin-header": "^3.1.0",
+        "eslint-plugin-prettier": "^3.3.1",
+        "jest": "^26.6.3",
+        "jest-junit": "^12.0.0",
+        "prettier": "^2.2.1",
+        "source-map-support": "^0.5.19",
+        "ts-jest": "^26.4.4",
+        "typescript": "4.1.5"
+    },
+    "gitHead": "449962a5d0cf542235248e98f515dcd51e030114"
 }

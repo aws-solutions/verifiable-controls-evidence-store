@@ -15,7 +15,7 @@
 */
 import { FunctionComponent, useMemo, useCallback } from 'react';
 
-import Table, { Column } from 'aws-northstar/components/Table';
+import Table from 'aws-northstar/components/Table';
 import Link from 'aws-northstar/components/Link';
 import { Deployment } from '@ags/webclient-application-release-core/types';
 import StatusIndicator from 'aws-northstar/components/StatusIndicator';
@@ -46,7 +46,7 @@ export function deploymentStatus(deployment: Deployment) {
 export const getColumnDefinitions = (estate?: Estate, path?: string) => {
     const envName = (id: string | undefined) =>
         estate?.environments?.find((env) => env.id === id)?.name ?? id;
-    const fields: Column<Deployment>[] = [
+    const fields: any[] = [
         {
             id: 'id',
             width: 300,

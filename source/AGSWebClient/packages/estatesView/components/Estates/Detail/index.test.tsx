@@ -13,9 +13,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+import EstateDetail from '.';
 import { EstateDisplay } from '@ags/webclient-estates-core/types';
 import { render } from '@testing-library/react';
-import EstateDetail from '.';
 
 jest.mock('@ags/webclient-core/containers/AppContext');
 
@@ -24,12 +24,12 @@ const estate: EstateDisplay = {
     name: 'test_estate_1',
     parentBUId: '11',
     parentBUName: '11Name',
-    toolingAccountId: '55555',
+    toolingAccountId: '111122223333',
     environments: [
         {
             id: '1111',
             name: 'env1',
-            awsAccountId: '66666',
+            awsAccountId: '555555555555',
             creationTime: '2021-11-10T23:20:41.747Z',
             envClasses: ['nonprod'],
             estateId: 'estateId1',

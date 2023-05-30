@@ -4,6 +4,7 @@
         "aws-cdk:enableDiffNoFail": "true",
         "@aws-cdk/core:stackRelativeExports": "true",
         "@aws-cdk/core:newStyleStackSynthesis": "true",
+        "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": true,
         "serviceName": "AGSSharedInfra",
         "sharedInfraVersion": 1,
         "configurationPath": "../../../configurations",

@@ -133,13 +133,12 @@ export class EvidenceService {
 
             attachmentData = await Promise.all(
                 input.attachments.map(async (x) => {
-                    const attachmentContent =
-                        await this.evidenceContentRepo.getEvidenceContent(
-                            this.attachmentBucketName,
-                            x.objectKey
-                        );
+                    const objectHash = await this.evidenceContentRepo.getObjectAttributes(
+                        this.attachmentBucketName,
+                        x.objectKey
+                    );
 
-                    if (!attachmentContent) {
+                    if (!objectHash) {
                         throw new AGSError(
                             `Unable to download attachment with objectKey ${x.objectKey}, the object appears to be empty`,
                             400
@@ -149,7 +148,8 @@ export class EvidenceService {
                     return {
                         objectKey: x.objectKey,
                         bucketName: this.attachmentBucketName,
-                        hash: computeHash(attachmentContent, 'base64url'),
+                        hash: objectHash.objectHash,
+                        size: objectHash.objectSize,
                     };
                 })
             );
@@ -421,24 +421,22 @@ export class EvidenceService {
 
         const results = await Promise.all(
             evidence.attachments.map(async (x) => {
-                const data = await this.evidenceContentRepo.getEvidenceContent(
+                const attributes = await this.evidenceContentRepo.getObjectAttributes(
                     x.bucketName,
                     x.objectKey
                 );
 
-                if (!data) {
+                if (!attributes) {
                     return false;
                 }
 
-                const hash = computeHash(data, 'base64url');
-
                 this.logger.debug(
                     `Attachment verification result for ${x.objectKey} is ${
-                        hash === x.hash
-                    } - stored hash ${x.hash} - computed hash ${hash}`
+                        attributes.objectHash === x.hash
+                    } - stored hash ${x.hash} - computed hash ${attributes}`
                 );
 
-                return hash === x.hash;
+                return attributes.objectHash === x.hash;
             })
         );
 
@@ -476,6 +474,7 @@ export class EvidenceService {
                           return {
                               objectKey: x.objectKey,
                               attachmentId: x.hash,
+                              size: x.size,
                           };
                       })
                     : undefined,

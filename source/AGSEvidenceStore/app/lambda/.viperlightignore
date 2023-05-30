@@ -2,3 +2,6 @@ doc
 canary/awsSigV4.js
 canary/canaryUtils.ts
 postman
+s3-evidece-collector/index.s:80
+s3-evidece-collector/index.s:81
+s3-evidece-collector/index.s:82

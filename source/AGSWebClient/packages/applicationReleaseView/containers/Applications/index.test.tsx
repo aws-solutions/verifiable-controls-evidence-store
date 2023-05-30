@@ -13,13 +13,15 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render, act, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { useAgsListQuery, useAgsMutation } from '@ags/webclient-core/queries';
-import { ApplicationSummary } from '@ags/webclient-application-release-core/types';
-import { UserGroup } from '@ags/webclient-core/types';
-import ApplicationsContainer from '.';
 import * as appContext from '@ags/webclient-core/containers/AppContext';
+
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { useAgsListQuery, useAgsMutation } from '@ags/webclient-core/queries';
+
+import { ApplicationSummary } from '@ags/webclient-application-release-core/types';
+import ApplicationsContainer from '.';
+import { BrowserRouter } from 'react-router-dom';
+import { UserGroup } from '@ags/webclient-core/types';
 
 // Mocks
 const mockMutateFn = jest.fn();
@@ -41,7 +43,7 @@ const fixtureListApplicationsData: ApplicationSummary[] = [
     {
         name: 'App1638118900061',
         description: 'Test application description 1',
-        applicationOwner: 'me1@me.com',
+        applicationOwner: 'me1@example.com',
         estateId: 'est-pt6oeb2u11',
         pipelineProvisionStatus: 'ACTIVE',
         createTime: '2021-11-28T17:01:46.827Z',
@@ -50,7 +52,7 @@ const fixtureListApplicationsData: ApplicationSummary[] = [
     {
         name: 'App1640624509697',
         description: 'Test application description 2',
-        applicationOwner: 'me2@me.com',
+        applicationOwner: 'me2@example.com',
         estateId: 'est-pt6oeb2u12',
         pipelineProvisionStatus: 'CREATE_FAILED',
         createTime: '2021-12-27T17:01:56.198Z',

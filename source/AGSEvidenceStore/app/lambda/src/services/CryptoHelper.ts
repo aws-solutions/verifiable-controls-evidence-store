@@ -28,3 +28,11 @@ export function computeHash(
 
     return encoding === 'base64url' ? base64url.default.fromBase64(hashValue) : hashValue;
 }
+
+export function base64ToBase64Url(input: string): string {
+    return base64url.default.fromBase64(input);
+}
+
+export function base64UrltoBase64(input: string): string {
+    return base64url.default.toBuffer(input).toString('base64');
+}

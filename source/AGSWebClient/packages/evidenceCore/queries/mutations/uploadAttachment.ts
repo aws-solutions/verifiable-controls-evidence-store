@@ -15,10 +15,14 @@
 */
 import * as aws from 'aws-sdk';
 import { FileUploadParams } from '../../types';
+import * as crypto from 'crypto';
 
 export async function uploadAttachment(params: FileUploadParams): Promise<string> {
     console.log('in mutation', params);
-    const s3Client = new aws.S3({ credentials: params.userCredential });
+    const s3Client = new aws.S3({
+        credentials: params.userCredential,
+        region: params.userCredential.region,
+    });
     const ssm = new aws.SSM({
         credentials: params.userCredential,
         region: params.userCredential.region,
@@ -39,12 +43,15 @@ export async function uploadAttachment(params: FileUploadParams): Promise<string
     }
     const objectKey = `${params.sessionId}/${params.file.name}`;
 
+    const hash = await incrementalHash(params.file);
+
     const result = await s3Client
         .putObject({
             Bucket: bucketName,
             Key: objectKey,
             Body: params.file,
             ContentType: params.file.type,
+            ChecksumSHA256: hash,
         })
         .promise();
 
@@ -53,4 +60,41 @@ export async function uploadAttachment(params: FileUploadParams): Promise<string
     }
 
     return objectKey;
+}
+
+function incrementalHash(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+        const chunkSize = 1024 * 1024 * 10; // read 10MB at a time
+        let offset = 0;
+
+        const hash = crypto.createHash('sha256');
+
+        const readEventHandler = (event: ProgressEvent<FileReader>) => {
+            if (event.target?.error === null || event.target?.error === undefined) {
+                offset += (event.target!.result as ArrayBuffer).byteLength;
+                // update the hash with what's in the stream
+                hash.update(new Uint8Array(event.target!.result as ArrayBufferLike));
+            } else {
+                reject(event.target.error);
+            }
+
+            if (offset >= file.size) {
+                // we've reached the end of the stream, compute the hash
+                resolve(Buffer.from(hash.digest()).toString('base64'));
+            }
+
+            // read the next chunk
+            readChunk(offset, chunkSize, file);
+        };
+
+        const readChunk = (startPosition: number, length: number, chunk: File): void => {
+            const reader = new FileReader();
+            const blob = chunk.slice(startPosition, length + startPosition);
+            reader.onload = readEventHandler;
+            reader.readAsArrayBuffer(blob);
+        };
+
+        // read the first chunk
+        readChunk(offset, chunkSize, file);
+    });
 }

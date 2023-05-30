@@ -24,7 +24,7 @@ export interface FullEvidenceOutput {
     content?: Record<string, unknown>;
     additionalTargetIds?: string[];
     metadata?: Record<string, unknown>;
-    attachments?: { objectKey: string; attachmentId: string }[];
+    attachments?: { objectKey: string; attachmentId: string; size?: number }[];
 }
 
 export interface FullEvidenceOutputWithVersion extends FullEvidenceOutput {

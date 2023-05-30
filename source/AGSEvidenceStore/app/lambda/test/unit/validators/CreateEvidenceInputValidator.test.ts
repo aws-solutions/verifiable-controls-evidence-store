@@ -94,7 +94,8 @@ describe('CreateEvidenceInputValidator tests', () => {
         const input = validator.parseAndValidate(
             getEvent({
                 providerId: '604271bb-22cb-4a54-8a19-20a33c0e9c36',
-                targetId: 'arn:aws:dynamodb:ap-southeast-2:123456:table/testing-123',
+                targetId:
+                    'arn:aws:dynamodb:ap-southeast-2:111122223333:table/testing-123',
                 content: {
                     succeed: true,
                 },

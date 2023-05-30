@@ -4,6 +4,7 @@
         "@aws-cdk/core:stackRelativeExports": "true",
         "@aws-cdk/aws-ecr-assets:dockerIgnoreSupport": true,
         "@aws-cdk/core:newStyleStackSynthesis": true,
+        "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": true,
         "serviceName": "AGSSecurityHubEvidenceCollector",
         "configurationPath": "../../../configurations",
         "solutionInfoFilePath": "../../../solution-info.json"

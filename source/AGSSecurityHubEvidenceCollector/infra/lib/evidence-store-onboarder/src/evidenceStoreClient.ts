@@ -25,7 +25,8 @@ export async function onboardEvidenceProvider(
     // check for existing
     const getProviderResponse = await httpClient.get(
         `${baseApiUrl}providers/${providerId}`,
-        'execute-api'
+        'execute-api',
+        { 'User-Agent': 'Chrome/85.0.4182.0' }
     );
 
     if (getProviderResponse.statusCode === 200) {
@@ -164,7 +165,8 @@ export async function onboardEvidenceProvider(
                     },
                 },
             ],
-        }
+        },
+        { 'User-Agent': 'Chrome/85.0.4182.0' }
     );
 
     if (createProviderResponse.statusCode !== 201) {

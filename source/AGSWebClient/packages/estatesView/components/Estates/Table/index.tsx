@@ -15,7 +15,7 @@
 */
 import { FunctionComponent, useMemo } from 'react';
 import { formatDate } from '@ags/webclient-core/utils/helpers';
-import Table, { Column, FetchDataOptions } from 'aws-northstar/components/Table';
+import Table, { FetchDataOptions } from 'aws-northstar/components/Table';
 import Link from 'aws-northstar/components/Link';
 import StatusIndicator from 'aws-northstar/components/StatusIndicator';
 import Button from 'aws-northstar/components/Button';
@@ -33,7 +33,7 @@ export interface EstatesTableProps {
     getData?: (options: FetchDataOptions) => Promise<void>;
 }
 
-const columnDefinitions: Column<EstateDisplay>[] = [
+const columnDefinitions: any[] = [
     {
         id: 'name',
         width: 220,

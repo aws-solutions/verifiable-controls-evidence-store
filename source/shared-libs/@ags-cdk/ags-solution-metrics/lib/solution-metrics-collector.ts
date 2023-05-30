@@ -13,23 +13,27 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import * as lambda from 'aws-cdk-lib/aws-lambda';
-import { CustomResource, Duration } from 'aws-cdk-lib';
-import * as cr from 'aws-cdk-lib/custom-resources';
 import * as path from 'path';
-import * as logs from 'aws-cdk-lib/aws-logs';
+import * as cdk from 'aws-cdk-lib';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+import { CustomResource } from 'aws-cdk-lib';
+import * as cr from 'aws-cdk-lib/custom-resources';
 import { Construct } from 'constructs';
+import { IVpc, SubnetSelection } from 'aws-cdk-lib/aws-ec2';
 
 export interface SolutionMetricsCollectorConstructProps {
     solutionDisplayName: string;
     solutionId: string;
-    metricEndpoint?: string;
     version: string;
-    sendAnonymousMetric: 'Yes' | 'No';
+    sendAnonymousMetrics: 'Yes' | 'No';
+    vpc?: IVpc;
+    vpcSubnets?: SubnetSelection;
     metricsData: { [key: string]: unknown };
 }
 
 export class SolutionMetricsCollectorConstruct extends Construct {
+    public readonly anonymousDataUUID: string;
+
     constructor(
         scope: Construct,
         id: string,
@@ -44,34 +48,31 @@ export class SolutionMetricsCollectorConstruct extends Construct {
                 description: `${props.solutionDisplayName} (${props.version}): metrics collection function`,
                 runtime: lambda.Runtime.NODEJS_14_X,
                 code: lambda.Code.fromAsset(path.resolve(__dirname, './lambda')),
-                handler: 'index.lambdaHandler',
-                timeout: Duration.minutes(1),
-                memorySize: 128,
-                environment: {
-                    SOLUTION_ID: props.solutionId,
-                    SOLUTION_VERSION: props.version,
-                    SOLUTION_METRIC_ENDPOINT:
-                        props.metricEndpoint ??
-                        'https://metrics.awssolutionsbuilder.com/generic',
-                },
+                handler: 'index.handler',
+                ...(props.vpc && { vpc: props.vpc }),
+                ...(props.vpcSubnets && { vpcSubnets: props.vpcSubnets }),
             }
         );
 
         const metricsCollectorCrProvider = new cr.Provider(
             this,
-            'metricsCollectorCrProvider',
+            'MetricsCollectorCrProvider',
             {
                 onEventHandler: metricsCollectorLambda,
-                logRetention: logs.RetentionDays.ONE_DAY,
             }
         );
 
-        new CustomResource(this, id, {
+        const customResource = new CustomResource(this, 'CustomResource', {
             serviceToken: metricsCollectorCrProvider.serviceToken,
             properties: {
-                sendAnonymousMetric: props.sendAnonymousMetric,
+                solutionId: props.solutionId,
+                solutionVersion: props.version,
+                region: cdk.Aws.REGION,
+                sendAnonymousMetrics: props.sendAnonymousMetrics,
                 ...props.metricsData,
             },
         });
+
+        this.anonymousDataUUID = customResource.getAttString('anonymousDataUUID');
     }
 }

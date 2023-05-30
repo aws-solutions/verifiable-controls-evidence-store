@@ -15,27 +15,27 @@
 */
 import 'reflect-metadata';
 
-import { anyString, anything, instance, mock, reset, when } from 'ts-mockito';
-
-import { EvidenceProviderRepository } from 'src/data/EvidenceProviderRepository';
-import { EvidenceContentRepository } from 'src/data/EvidenceContentRepository';
-import { ElasticSearchEvidenceData } from 'src/data/schemas/EvidenceDataWithContent';
-import { EvidenceRepository } from 'src/data/EvidenceRepository';
-import { EvidenceService } from 'src/services/EvidenceService';
-import { CreateEvidenceInput } from 'src/types/CreateEvidenceInput';
-import { GetEvidencesInput } from 'src/types/GetEvidencesInput';
-import {
-    generatePaginationToken,
-    parsePaginationToken,
-} from 'src/services/PaginationTokenHelper';
-import { StaticLoggerFactory } from '@apjsb-serverless-lib/logger';
-import { EvidenceSchemaRepository } from 'src/data/EvidenceSchemaRepository';
 import {
     EvidenceProviderData,
     EvidenceSchemaData,
 } from 'src/data/schemas/EvidenceProviderData';
-import { QldbHelper } from 'src/data/QldbHelper';
+import { anyString, anything, instance, mock, reset, when } from 'ts-mockito';
+import {
+    generatePaginationToken,
+    parsePaginationToken,
+} from 'src/services/PaginationTokenHelper';
+
 import { AppConfiguration } from 'src/common/configuration/AppConfiguration';
+import { CreateEvidenceInput } from 'src/types/CreateEvidenceInput';
+import { ElasticSearchEvidenceData } from 'src/data/schemas/EvidenceDataWithContent';
+import { EvidenceContentRepository } from 'src/data/EvidenceContentRepository';
+import { EvidenceProviderRepository } from 'src/data/EvidenceProviderRepository';
+import { EvidenceRepository } from 'src/data/EvidenceRepository';
+import { EvidenceSchemaRepository } from 'src/data/EvidenceSchemaRepository';
+import { EvidenceService } from 'src/services/EvidenceService';
+import { GetEvidencesInput } from 'src/types/GetEvidencesInput';
+import { QldbHelper } from 'src/data/QldbHelper';
+import { StaticLoggerFactory } from '@apjsb-serverless-lib/logger';
 
 jest.useFakeTimers();
 
@@ -232,8 +232,8 @@ describe('create evidence tests', () => {
         when(schemaRepo.getSchema('123', 'schema-id')).thenResolve(schema);
         when(evidenceContentRepo.putContent(anything())).thenResolve('host/key1/key2');
         when(
-            evidenceContentRepo.getEvidenceContent(anything(), 'attachment1')
-        ).thenResolve('my-attachment-data');
+            evidenceContentRepo.getObjectAttributes(anything(), 'attachment1')
+        ).thenResolve({ objectHash: 'my-attachment-data' });
         when(evidenceRepo.createEvidence(anything())).thenResolve();
         when(evidenceRepo.getEvidenceByHashValue(anyString())).thenResolve(undefined);
 
@@ -249,6 +249,8 @@ describe('create evidence tests', () => {
         expect(evidence.evidenceId).not.toBeUndefined();
         expect(evidence.attachments).not.toBeUndefined();
         expect(evidence.attachments?.length).toBe(1);
+        expect(evidence.attachments?.[0].attachmentId).toBe('my-attachment-data');
+        expect(evidence.attachments?.[0].objectKey).toBe('attachment1');
     });
 
     test('throw error if unable to download attachment', async () => {
@@ -257,8 +259,8 @@ describe('create evidence tests', () => {
         when(schemaRepo.getSchema('123', 'schema-id')).thenResolve(schema);
         when(evidenceContentRepo.putContent(anything())).thenResolve('host/key1/key2');
         when(
-            evidenceContentRepo.getEvidenceContent(anything(), 'attachment1')
-        ).thenResolve(null);
+            evidenceContentRepo.getObjectAttributes(anything(), 'attachment1')
+        ).thenResolve(undefined);
         when(evidenceRepo.createEvidence(anything())).thenResolve();
         when(evidenceRepo.getEvidenceByHashValue(anyString())).thenResolve(undefined);
 
@@ -396,7 +398,9 @@ describe('get evidence by id tests', () => {
         // arrange
         when(evidenceRepo.getEvidenceById('1234')).thenResolve({
             ...evidenceData,
-            attachments: [{ objectKey: 'firstkey', hash: '1234', bucketName: 'bucket' }],
+            attachments: [
+                { objectKey: 'firstkey', hash: '1234', bucketName: 'bucket', size: 1000 },
+            ],
         });
 
         // act
@@ -634,6 +638,7 @@ describe('verify evidence tests', () => {
                     bucketName: 'test',
                     hash: 'Kzs_hqA71z68uU_VoGtl70zlqL_uTIX3UtPh76XYciA',
                     objectKey: 'key',
+                    size: 1000,
                 },
             ],
         });
@@ -654,12 +659,16 @@ describe('verify evidence tests', () => {
                     bucketName: 'test',
                     hash: 'Kzs_hqA71z68uU_VoGtl70zlqL_uTIX3UtPh76XYciA',
                     objectKey: 'key',
+                    size: 1000,
                 },
             ],
             providerName: evidenceData.providerName,
         });
-        when(evidenceContentRepo.getEvidenceContent(anything(), anything())).thenResolve(
-            JSON.stringify({ succeed: true })
+        when(evidenceContentRepo.getObjectAttributes(anything(), anything())).thenResolve(
+            {
+                objectHash: 'Kzs_hqA71z68uU_VoGtl70zlqL_uTIX3UtPh76XYciA',
+                objectSize: 1000,
+            }
         );
 
         // act

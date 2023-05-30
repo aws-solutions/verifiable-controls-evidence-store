@@ -17,7 +17,7 @@ export declare type SubnetMappingOptions = {
     [key in SubnetGroup]: SubnetMapping;
 };
 export declare type AGSEnvironments = Record<string, AGSEnvironment>;
-export declare type Configuration = Record<string, string>;
+export declare type Configuration = Record<string, any>;
 export declare enum SubnetGroup {
     INGRESS = "ingress",
     SERVICE = "service",

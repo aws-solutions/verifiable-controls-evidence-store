@@ -13,10 +13,11 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { render, fireEvent, act, within, RenderResult } from '@testing-library/react';
+import { RenderResult, act, fireEvent, render, within } from '@testing-library/react';
+
 import ApplicationForm from '.';
-import { BrowserRouter } from 'react-router-dom';
 import { ApplicationFormData } from './types';
+import { BrowserRouter } from 'react-router-dom';
 import { Estate } from '@ags/webclient-application-release-core/types';
 
 export const fixtureListEstatesData: Estate[] = [
@@ -25,7 +26,7 @@ export const fixtureListEstatesData: Estate[] = [
         name: 'test_estate',
         environments: [
             {
-                awsAccountId: '111',
+                awsAccountId: '111122223333',
                 estateId: 'est-1111111',
                 name: 'env1',
                 isManualApprovalRequired: false,
@@ -34,7 +35,7 @@ export const fixtureListEstatesData: Estate[] = [
                 mandatory: true,
             },
             {
-                awsAccountId: '222',
+                awsAccountId: '555555555555',
                 estateId: 'est-1111111',
                 name: 'env2',
                 isManualApprovalRequired: false,

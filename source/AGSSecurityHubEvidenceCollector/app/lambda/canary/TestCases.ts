@@ -13,11 +13,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-import { FullEvidenceOutput, SearchEvidenceResponse } from '../src/common/Types';
-import { v4 as uuid } from 'uuid';
 import * as AWS from 'aws-sdk';
 
+import { FullEvidenceOutput, SearchEvidenceResponse } from '../src/common/Types';
 import { callback, createRequest, log, testApi } from './canaryUtils';
+
+import { v4 as uuid } from 'uuid';
 
 const sqs = new AWS.SQS({ region: process.env.AWS_REGION, apiVersion: '2012-11-05' });
 
@@ -56,7 +57,7 @@ export class TestCases {
     }
 
     async generateSQSFinding(queueUrl: string, resourceArns: string[]): Promise<void> {
-        const sourceAccount = '1234567890';
+        const sourceAccount = '111122223333';
 
         const resources = resourceArns.map((x: string) => {
             return {
