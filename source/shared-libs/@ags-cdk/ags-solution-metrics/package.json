@@ -44,7 +44,7 @@
         "webpack-node-externals": "^2.5.2"
     },
     "dependencies": {
-        "aws-cdk-lib": "^2.60.0",
+        "aws-cdk-lib": "^2.80.0",
         "aws-lambda": "^1.0.7",
         "aws-sdk": "^2.799.0",
         "axios": "^0.25.0",
