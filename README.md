@@ -1,4 +1,8 @@
-# Verifiable Controls Evidence Store
+ ## Important: This AWS Solution is no longer available.
+
+**You can find other AWS Solutions in the [AWS Solutions Library](https://aws.amazon.com/solutions/).**
+
+## Verifiable Controls Evidence Store
 
 The Verifiable Controls Evidence Store (Evidence Store) provides a mechanism to centrally store findings and results of cloud security controls governing AWS workloads, in the form of enduring evidence records that are safeguarded against tampering. An evidence record is a system (or human) generated digital record of a historical fact, related to one or more target entities, and is issued by an evidence provider.
 
